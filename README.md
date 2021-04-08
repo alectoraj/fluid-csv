@@ -1,9 +1,9 @@
 # fluid-csv
 > Under Construction
 
-Fluid Csv Reader and Writer
+## Fluid Csv Reader and Writer
 
-Intended design:
+Intended design | for Reader:
 ```
 Csv
 .using( delimiter(";") | fixed(int...) | line() ) : CsvLineReader
@@ -51,5 +51,4 @@ CsvReader {
   Sequence of( Path file );
   Sequence of( Reader reader );
 }
-
 ```

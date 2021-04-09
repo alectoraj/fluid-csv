@@ -8,7 +8,7 @@ Intended design | for Reader:
 Csv
 .using( delimiter(";") | fixed(int...) | line() ) : CsvLineReader
 .as( string() | string(n) | integer() | bigDecimal() | orm(User.class) ) : CsvMapper
-.read( lines() | head(n) | head(-n) | tail(n) | tail(-n) | skip(n).head(n) ) : CsvReader
+.read( lines() | head(n) | head(-n) | tail(n) | tail(-n) | head(n, skip(t)) | lines(skip(n)) ) : CsvReader
 .of( file | path | reader ) : Sequence
 .stream() : Stream
 ...

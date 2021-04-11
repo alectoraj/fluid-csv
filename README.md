@@ -5,18 +5,20 @@
 
 ### Intended design | for Reader:
 ```
-FileReader()
-.using( LineSplitter )
-.as( OrmMapper )
-.from( File | Path )
+Stream<String>
+.map( LineSplitter )
+.map( OrmMapper )
+...
 ```
+or
+```
+Stream<Sting>
+.map( LineSplitter.andThen(OrmMapper) )
+...
+```
+> Stream<String> maybe obtained in usual way like `Files.lines(Path)`
 
 ### Involved Classes
-
-`FileReader`
-> define how a file should be read\
-> should include `skip` feature there - *approach to be decided*\
-> `lines() | head(n) | head(-n) | tail(n) | tail(-n)`
 
 `LineSplitter`
 > define how a line should be split to extract columns\
@@ -25,7 +27,3 @@ FileReader()
 `OrmMapper`
 > define how split line should be mapped to java object\
 > `string() | string(n) | integer() | bigDecimal() | orm(User.class)`
-
-`CsvReader`
-> is an iterator that iterates through the lines in a file as per `FileReader` definition
-> returns a java object as per `LineSplitter` and `OrmMapper` definition

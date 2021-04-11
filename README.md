@@ -3,52 +3,21 @@
 
 ## Fluid Csv Reader and Writer
 
-Intended design | for Reader:
+### Intended design | for Reader:
 ```
-Csv
-.using( delimiter(";") | fixed(int...) | line() ) : CsvLineReader
-.as( string() | string(n) | integer() | bigDecimal() | orm(User.class) ) : CsvMapper
-.read( lines() | head(n) | head(-n) | tail(n) | tail(-n) | head(n, skip(t)) | lines(skip(n)) ) : CsvReader
-.of( file | path | reader ) : Sequence
-.stream() : Stream
-...
-
-Csv {
-  static using( CsvLineInterpreter );
-}
-
-CsvLineInterpreter {
-  String[] interpret( String line );
-}
-
-CsvLineReader {
-  CsvMapper as( CsvRowMapper );
-}
-
-CsvRowMapper {
-  static CsvRowMapper string() -> string(0);
-  static CsvRowMapper string(int index);
-  
-  static CsvRowMapper integer() -> integer(0);
-  static CsvRowMapper integer(int index);
-  
-  static CsvRowMapper bigDecimal() -> bigDecimal(0);
-  static CsvRowMapper bigDecimal(int index);
-  
-  static CsvRowMapper orm(Class);
-  
-  T map(String[] interpretedLine);
-  CsvRowMapper then(Function mapper);
-}
-
-CsvMapper {
-  CsvReader read( CsvContentReader );
-}
-
-CsvReader {
-  Sequence of( String file );
-  Sequence of( File file );
-  Sequence of( Path file );
-  Sequence of( Reader reader );
-}
+FileReader()
+.using( LineSplitter )
+.as( OrmMapper )
+.from( File | Path )
 ```
+
+`FileReader`      - define how a file should be read | should include `skip` feature there - approach to be decided
+`LineSplitter`    - define how a line should be split to extract columns
+`OrmMapper`       - define how split line should be mapped to java object
+`CsvReader`       - is an iterator that iterates through the lines in a file as per `FileReader` definition
+                    and returns a java object as per `LineSplitter` and `OrmMapper` definition
+
+### METHODS
+`FileReader`      - lines() | head(n) | head(-n) | tail(n) | tail(-n)
+`LineSplitter`    - delimiter(";") | fixed(int...) | line()
+`OrmMapper`       - string() | string(n) | integer() | bigDecimal() | orm(User.class)

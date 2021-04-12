@@ -19,8 +19,8 @@ public class TestSplitWithDelimiterAndQuote {
 	public void testSimple() {
 		Stream.of(
 			"\"A01\", \"B01\", \"1, 2, 4\", \"D01\"",
-			"\"A02\", \"B02\", \"2, 4, 8\", \"D02\"",
-			"\"A03\", \"B03\", \"3, 6, 9\", \"D03\""
+			"\"A02\", \"B02\", \"2, 4, 8\", \"D\\\"02\"",
+			"\"A03\", \"B03\", \"3, 6, 9\", \"\""
 		)
 		.map( delimiter(',', '"') )
 		.map( orm(BeanSimple.class) )

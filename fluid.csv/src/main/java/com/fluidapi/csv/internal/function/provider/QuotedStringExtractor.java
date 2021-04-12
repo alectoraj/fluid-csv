@@ -29,20 +29,17 @@ public class QuotedStringExtractor implements Supplier<String> {
 			return null;
 		} else if( quoteEnded == failResponse ) {
 			throw new CsvFormatException("quote started but never ended");
+		} else if( quoteStarted == quoteEnded ) {
+			throw new CsvFormatException("something's wrong, contact developer");
 		} else {
 			int delimiterAt = indexFinder.findNext(quote.delimiter());
 			
 			if( delimiterAt == failResponse && !indexFinder.isOutOfRange() ) {
 				throw new CsvFormatException("delimiter expected but not found");
-			} else {
-				++quoteStarted;
-				if( quoteStarted == quoteEnded ) {
-					throw new CsvFormatException("something's wrong, contact developer");
-				}
 			}
 		}
 		
-		return data.substring(quoteStarted, quoteEnded);
+		return data.substring(++quoteStarted, quoteEnded);
 	}
 
 	

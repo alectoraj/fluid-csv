@@ -11,8 +11,8 @@ public class IntegerMapper extends AbstractNumericColumnMapper {
 	}
 	
 	@Override
-	public Object transform(String in) {
-		return Integer.valueOf(in.strip());
+	protected Object toNumber(String in) {
+		return Integer.valueOf(in);
 	}
 		
 }

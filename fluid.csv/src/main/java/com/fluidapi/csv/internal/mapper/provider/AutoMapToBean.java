@@ -4,7 +4,6 @@ import static com.fluidapi.csv.internal.validation.Requires.requireTrue;
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
-import static lombok.AccessLevel.PROTECTED;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -22,13 +21,16 @@ import com.fluidapi.csv.internal.mapper.provider.beans.FieldInfo;
 import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
 import com.fluidapi.csv.internal.mapper.provider.beans.MethodInfo;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor(access = PROTECTED)
 public class AutoMapToBean<T> implements OrmMapper<T> {
 	
 	private final Constructor<T> constructor;
 	private final Map<Integer, Setter> setters;
+	
+	public AutoMapToBean(Class<T> type) {
+		requireNonNull(type, "class type");
+		this.constructor = findConstructor(type);
+		this.setters = findSetters(type);
+	}
 
 	@Override
 	public T apply(String[] columns) {
@@ -60,11 +62,6 @@ public class AutoMapToBean<T> implements OrmMapper<T> {
 		return instance;
 	}
 	
-	public static <T> OrmMapper<T> of(Class<T> type) {
-		requireNonNull(type, "class type");
-		return new AutoMapToBean<>(findConstructor(type), findSetters(type));
-	}
-
 	private static <T> Constructor<T> findConstructor(Class<T> type) {
 		try {
 			return type.getConstructor();

@@ -11,8 +11,15 @@ public abstract class AbstractNumericColumnMapper extends AbstractColumnMapper {
 	}
 	
 	@Override
+	public Object transform(String in) {
+		return toNumber(in.strip());
+	}
+	
+	@Override
 	protected boolean treatAsEmpty(String input) {
 		return isBlank(input);
 	}
+	
+	protected abstract Object toNumber(String in);
 	
 }

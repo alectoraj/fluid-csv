@@ -8,6 +8,7 @@ import static com.fluidapi.csv.Csv.orm;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -21,9 +22,12 @@ public class TestCsv {
 	@Test
 	public void tryDelimiter() throws IOException {
 		System.out.println("DELIMITER BY ;");
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM d, uuuu");
 		Files.lines(csvOfDelimiter())
 			.map( delimiter(";") )
 			.map( orm(Person.class) )
+			.map(Person::getBirthdate)
+			.map(format::format)
 			.forEach(System.out::println);
 	}
 	

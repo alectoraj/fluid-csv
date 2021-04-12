@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 
 import com.fluidapi.csv.exception.UncheckedException;
 import com.fluidapi.csv.internal.function.Setter;
-import com.fluidapi.csv.internal.function.Transformation;
 
 public class FieldInfo extends MemberInfo<Field> {
 
@@ -79,9 +78,9 @@ public class FieldInfo extends MemberInfo<Field> {
 				.formatted(toSetterName());
 	}
 
-	private Transformation typeTransformation() {
-		// TODO use standard methodology to convert input string into given type
-		return Transformation.none();
+	@Override
+	public Class<?> targetType() {
+		return member.getType();
 	}
 
 }

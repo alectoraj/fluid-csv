@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 
 import com.fluidapi.csv.exception.UncheckedException;
 import com.fluidapi.csv.internal.function.Setter;
-import com.fluidapi.csv.internal.function.Transformation;
 
 public class MethodInfo extends MemberInfo<Method> {
 
@@ -38,14 +37,15 @@ public class MethodInfo extends MemberInfo<Method> {
 	private String firstParamTypeName() {
 		return switch (member.getParameterCount()) {
 			case 0 -> "";
-			case 1 -> member.getParameterTypes()[0].getSimpleName();
+			case 1 -> targetType().getSimpleName();
 			default -> "too many parameters";
 		};
 	}
 
-	private Transformation typeTransformation() {
-		// TODO use standard methodology to convert input string into given type
-		return Transformation.none();
+	@Override
+	public Class<?> targetType() {
+		// assumption: is a valid field setter
+		return member.getParameterTypes()[0];
 	}
 
 }

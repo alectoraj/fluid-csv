@@ -4,18 +4,24 @@ import static com.fluidapi.csv.internal.validation.Requires.requireTrue;
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toMap;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import com.fluidapi.csv.OrmMapper;
-import com.fluidapi.csv.config.CsvColumn;
+import com.fluidapi.csv.exception.UncheckedException;
+import com.fluidapi.csv.internal.function.Setter;
+import com.fluidapi.csv.internal.mapper.provider.beans.AnnotatedInfo;
+import com.fluidapi.csv.internal.mapper.provider.beans.FieldInfo;
+import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
+import com.fluidapi.csv.internal.mapper.provider.beans.MethodInfo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,95 +46,60 @@ public class AutoMapToBean<T> implements OrmMapper<T> {
 	}
 	
 	private T applyUnchecked(String[] columns) throws InstantiationException, IllegalAccessException, InvocationTargetException {
-		T t = constructor.newInstance();
 		
-		for (int index = 0, length = setters.size(); index < length; index++) {
-			Setter setter = setters.get(index);
-			Object value = setter.transform.apply(columns[index]);
-			setter.method.invoke(t, value);
-		}
-		
-		return t;
-	}
+		// create instance
+		T instance = constructor.newInstance();
 
-	static record Setter(Method method, Function<String, Object> transform) {
-		Setter {
-			requireNonNull(method, "method");
-			requireNonNull(transform, "transform");
-		}
-	}
-	
-	static record FieldInfo(Field field) {
-
-		boolean isCsvColumn() {
-			return field.getAnnotation(CsvColumn.class) != null;
-		}
-		int csvIndex() {
-			return field.getAnnotation(CsvColumn.class).value();
-		}
-		Setter toSetter() {
-			return new Setter(findSetter(), t -> t);
-		}
-		Method findSetter() {
-			try {
-				return field.getDeclaringClass()
-						.getMethod(toSetterName(), field.getType());
-			} catch (NoSuchMethodException | SecurityException e) {
-				throw new RuntimeException("setter not found", e);
-			}
-		}
-		String toSetterName() {
-			StringBuilder name = new StringBuilder("set").append(field.getName());
-			name.setCharAt(3, Character.toUpperCase(name.charAt(3)));
-			return name.toString();
-		}
+		// set values using setters
+		IntStream.range(0, columns.length)
+		.forEach(index -> {
+			setters.get(index)
+				.set(instance, columns[index]);
+		});
 		
-	}
-	
-	static record MethodInfo(Method method) {
-
-		boolean isCsvColumn() {
-			return method.getAnnotation(CsvColumn.class) != null;
-		}
-		int csvIndex() {
-			return method.getAnnotation(CsvColumn.class).value();
-		}
-		boolean isSingleParameter() {
-			return method.getParameterCount() == 1;
-		}
-		Setter toSetter() {
-			return new Setter(method, t -> t);
-		}
-		
+		// return populated instance
+		return instance;
 	}
 	
 	public static <T> OrmMapper<T> of(Class<T> type) {
 		requireNonNull(type, "class type");
-		
-		Map<Integer, Setter> setters = new HashMap<>();
-		putSettersOfFields(setters, type.getDeclaredFields());
-		putSettersOfMethods(setters, type.getDeclaredMethods());
-		
+		return new AutoMapToBean<>(findConstructor(type), findSetters(type));
+	}
+
+	private static <T> Constructor<T> findConstructor(Class<T> type) {
 		try {
-			return new AutoMapToBean<>(type.getConstructor(), setters);
+			return type.getConstructor();
 		} catch (NoSuchMethodException | SecurityException e) {
-			throw new RuntimeException("empty constructor not found", e);
+			throw new UncheckedException("empty constructor not found or not accessible", e);
 		}
 	}
 
-	private static void putSettersOfFields(Map<Integer, Setter> setters, Field[] fields) {
-		stream(fields)
-		.map(FieldInfo::new)
-		.filter(FieldInfo::isCsvColumn)
-		.forEach(field -> setters.put(field.csvIndex(), field.toSetter()));
+	private static <T> Map<Integer, Setter> findSetters(Class<T> type) {
+		return	Stream
+				.concat(
+						findFieldSetters(type.getDeclaredFields()),
+						findMethodSetters(type.getDeclaredMethods())
+				)
+				.collect(
+						toMap(
+							AnnotatedInfo::getCsvColumnIndex,
+							MemberInfo::findSetter)
+				);
 	}
 
-	private static void putSettersOfMethods(Map<Integer, Setter> setters, Method[] methods) {
+	private static Stream<FieldInfo> findFieldSetters(Field[] fields) {
+		return
+		stream(fields)
+		.map(FieldInfo::new)
+		.filter(FieldInfo::isCsvColumn);
+	}
+
+	private static Stream<MethodInfo> findMethodSetters(Method[] methods) {
+		return
 		stream(methods)
 		.map(MethodInfo::new)
 		.filter(MethodInfo::isCsvColumn)
-		.filter(MethodInfo::isSingleParameter)
-		.forEach(method -> setters.put(method.csvIndex(), method.toSetter()));
+		.filter(MethodInfo::isFieldSetter);
 	}
 
 }

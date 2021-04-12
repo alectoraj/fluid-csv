@@ -7,7 +7,7 @@ import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
 
 public class LocalDateMapper extends AbstractTemporalMapper {
 	
-	public static final Class<LocalDate> supports = LocalDate.class;
+	public static final Class<LocalDate>[] supports = support(LocalDate.class);
 
 	public LocalDateMapper(MemberInfo<?> memberInfo) {
 		super(memberInfo);

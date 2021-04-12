@@ -3,6 +3,7 @@ package com.fluidapi.csv.bean;
 import java.time.LocalDate;
 
 import com.fluidapi.csv.config.CsvColumn;
+import com.fluidapi.csv.config.StripString;
 
 import lombok.Data;
 
@@ -14,18 +15,15 @@ public class Person {
 	
 	@CsvColumn(1)
 	private String lastname;
-	
+
+	@CsvColumn(2)
 	private int age;
 	
 	@CsvColumn(3)
+	@StripString
 	private String location;
 	
 	@CsvColumn(4)
 	private LocalDate birthdate;
-	
-	@CsvColumn(2)
-	public void setAge(String age) {
-		this.age = Integer.parseInt(age);
-	}
 	
 }

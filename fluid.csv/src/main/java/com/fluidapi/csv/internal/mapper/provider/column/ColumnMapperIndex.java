@@ -1,6 +1,7 @@
 package com.fluidapi.csv.internal.mapper.provider.column;
 
 import static com.fluidapi.csv.internal.validation.Requires.requireTrue;
+import static java.util.Arrays.stream;
 import static java.util.Objects.nonNull;
 
 import java.util.HashMap;
@@ -12,16 +13,16 @@ import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
 
 public class ColumnMapperIndex {
 	
-	private static final Map<Class<?>, ColumnMapperInitializer> initializerIndex = apiIndex();
+	private static final Map<Class<?>, ColumnMapperInitializer> initializerIndex = new HashMap<>();
 
-	private static Map<Class<?>, ColumnMapperInitializer> apiIndex() {
-		Map<Class<?>, ColumnMapperInitializer> index = new HashMap<>();
-
-		index.put(StringMapper.supports, StringMapper::new);
-		index.put(IntegerMapper.supports, IntegerMapper::new);
-		index.put(LocalDateMapper.supports, LocalDateMapper::new);
-		
-		return index;
+	static {
+		putKeys(StringMapper.supports, StringMapper::new);
+		putKeys(IntegerMapper.supports, IntegerMapper::new);
+		putKeys(LocalDateMapper.supports, LocalDateMapper::new);
+	}
+	
+	private static void putKeys(Class<?>[] keys, ColumnMapperInitializer initializer) {
+		stream(keys).forEach(key -> initializerIndex.put(key, initializer));
 	}
 	
 	public static final ColumnMapper mapperOf(MemberInfo<?> memberInfo) {

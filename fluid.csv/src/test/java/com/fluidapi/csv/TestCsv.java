@@ -1,6 +1,5 @@
 package com.fluidapi.csv;
 
-import static com.fluidapi.csv.Csv.bigDecimal;
 import static com.fluidapi.csv.Csv.delimiter;
 import static com.fluidapi.csv.Csv.fixed;
 import static com.fluidapi.csv.Csv.orm;
@@ -10,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.annotation.Testable;
 
@@ -32,12 +30,11 @@ public class TestCsv {
 	}
 	
 	@Test
-	@Disabled
 	public void tryFixed() throws IOException {
-		System.out.println("FIXED OF 24, 24, 3, 20");
+		System.out.println("FIXED OF 24, 24, 3, 20, 10");
 		Files.lines(csvOfFixed())
-			.map( fixed(24, 24, 3, 20) )
-			.map( bigDecimal(2) )
+			.map( fixed(24, 24, 3, 20, 10) )
+			.map( orm(Person.class) )
 			.forEach(System.out::println);
 	}
 

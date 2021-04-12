@@ -2,10 +2,12 @@ package com.fluidapi.csv;
 
 import java.math.BigDecimal;
 
+import com.fluidapi.csv.internal.beans.Quotes;
 import com.fluidapi.csv.internal.mapper.provider.AutoMapToBean;
 import com.fluidapi.csv.internal.mapper.provider.PickStringColumn;
 import com.fluidapi.csv.internal.splitter.provider.NoSplitLine;
 import com.fluidapi.csv.internal.splitter.provider.SplitByDelimiter;
+import com.fluidapi.csv.internal.splitter.provider.SplitByDelimiterWithQuotes;
 import com.fluidapi.csv.internal.splitter.provider.SplitByFixedLengths;
 import com.fluidapi.csv.internal.splitter.provider.SplitByFixedLengthsThenStrip;
 
@@ -15,6 +17,12 @@ public class Csv {
 
 	public static LineSplitter delimiter(String regex) {
 		return new SplitByDelimiter(regex);
+	}
+	public static LineSplitter delimiter(char delimiter, char quotation) {
+		return delimiter(delimiter, quotation, quotation);
+	}
+	public static LineSplitter delimiter(char delimtier, char quoteStart, char quoteEnd) {
+		return new SplitByDelimiterWithQuotes(new Quotes(delimtier, quoteStart, quoteEnd));
 	}
 	public static LineSplitter fixed(int...lengths) {
 		return new SplitByFixedLengths(lengths);

@@ -2,6 +2,7 @@ package com.fluidapi.csv;
 
 import static com.fluidapi.csv.Csv.delimiter;
 import static com.fluidapi.csv.Csv.orm;
+import static com.fluidapi.csv.Csv.strip;
 import static java.time.Month.JANUARY;
 import static java.time.Month.JULY;
 import static java.time.Month.NOVEMBER;
@@ -32,22 +33,23 @@ public class TestCsvByDelimiter {
 	@Test
 	public void testSimple() {
 		List<Employee> employees = Stream.of(
-			"Zeus Dev;5290;Jan 15, 1650",
-			"Saint Archimidis;721;Nov 22, 1834",
-			"Zig Buffalo;1982;Jul 1, 1720",
-			"Kumin Surter;90;"
+			"Zeus Dev; 5290; Jan 15, 1650; Olympus",
+			"Saint Archimidis; 721; Nov 22, 1834; Greece",
+			"Zig Buffalo; 1982; Jul 1, 1720",
+			"Kumin Surter; 90;"
 		)
 		.map( delimiter(";") )
+		.map( strip() )
 		.map( orm(Employee.class) )
 		.toList();
 		
 		assertThat(employees.size(), is(4));
 		
 		Iterator<Employee> e = employees.iterator();
-		testEmployeeSame(e.next(), Employee.of("Zeus Dev", 5290, LocalDate.of(1650, JANUARY, 15)));
-		testEmployeeSame(e.next(), Employee.of("Saint Archimidis", 721, LocalDate.of(1834, NOVEMBER, 22)));
-		testEmployeeSame(e.next(), Employee.of("Zig Buffalo", 1982, LocalDate.of(1720, JULY, 1)));
-		testEmployeeSame(e.next(), Employee.of("Kumin Surter", 90, null));
+		testEmployeeSame(e.next(), Employee.of("Zeus Dev", 5290, LocalDate.of(1650, JANUARY, 15), "Olympus"));
+		testEmployeeSame(e.next(), Employee.of("Saint Archimidis", 721, LocalDate.of(1834, NOVEMBER, 22), "Greece"));
+		testEmployeeSame(e.next(), Employee.of("Zig Buffalo", 1982, LocalDate.of(1720, JULY, 1), null));
+		testEmployeeSame(e.next(), Employee.of("Kumin Surter", 90, null, null));
 	}
 
 	protected void testEmployeeSame(Employee actual, Employee expected) {
@@ -72,6 +74,9 @@ public class TestCsvByDelimiter {
 		@CsvColumn(2)
 		@CsvFormat("MMM d, uuuu")
 		private LocalDate joined;
+		
+		@CsvColumn(3)
+		private String location;
 		
 	}
 

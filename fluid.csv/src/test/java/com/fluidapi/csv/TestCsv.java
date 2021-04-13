@@ -2,8 +2,8 @@ package com.fluidapi.csv;
 
 import static com.fluidapi.csv.Csv.delimiter;
 import static com.fluidapi.csv.Csv.fixed;
-import static com.fluidapi.csv.Csv.fixedStripped;
 import static com.fluidapi.csv.Csv.orm;
+import static com.fluidapi.csv.Csv.strip;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,7 +39,8 @@ public class TestCsv {
 	public void tryFixedStripped() throws IOException {
 		System.out.println("STRIPPED FIXED OF 24, 24, 3, 20, 10");
 		Files.lines(csvOfFixed())
-			.map( fixedStripped(24, 24, 3, 20, 10) )
+			.map( fixed(24, 24, 3, 20, 10) )
+			.map( strip() )
 			.map( orm(Person.class) )
 			.forEach(System.out::println);
 	}

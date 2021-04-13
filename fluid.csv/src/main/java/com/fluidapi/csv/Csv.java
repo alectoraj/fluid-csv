@@ -3,13 +3,13 @@ package com.fluidapi.csv;
 import java.math.BigDecimal;
 
 import com.fluidapi.csv.internal.beans.Quotes;
+import com.fluidapi.csv.internal.decorator.provider.StripLineColumns;
 import com.fluidapi.csv.internal.mapper.provider.AutoMapToBean;
 import com.fluidapi.csv.internal.mapper.provider.PickStringColumn;
 import com.fluidapi.csv.internal.splitter.provider.NoSplitLine;
 import com.fluidapi.csv.internal.splitter.provider.SplitByDelimiter;
 import com.fluidapi.csv.internal.splitter.provider.SplitByDelimiterWithQuotes;
 import com.fluidapi.csv.internal.splitter.provider.SplitByFixedLengths;
-import com.fluidapi.csv.internal.splitter.provider.SplitByFixedLengthsThenStrip;
 
 public class Csv {
 	
@@ -27,11 +27,14 @@ public class Csv {
 	public static LineSplitter fixed(int...lengths) {
 		return new SplitByFixedLengths(lengths);
 	}
-	public static LineSplitter fixedStripped(int...lengths) {
-		return new SplitByFixedLengthsThenStrip(lengths);
-	}
 	public static LineSplitter line() {
 		return new NoSplitLine();
+	}
+	
+	// LINE DECORATORS //
+	
+	public static LineDecorator strip() {
+		return new StripLineColumns();
 	}
 	
 	// ORM MAPPERS //

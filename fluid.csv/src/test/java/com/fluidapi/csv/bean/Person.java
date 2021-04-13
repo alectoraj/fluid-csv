@@ -2,9 +2,9 @@ package com.fluidapi.csv.bean;
 
 import java.time.LocalDate;
 
-import com.fluidapi.csv.config.CsvColumn;
-import com.fluidapi.csv.config.CsvFormat;
-import com.fluidapi.csv.config.StripString;
+import com.fluidapi.csv.annotations.CsvColumn;
+import com.fluidapi.csv.annotations.CsvFormat;
+import com.fluidapi.csv.annotations.StripString;
 
 import lombok.Data;
 

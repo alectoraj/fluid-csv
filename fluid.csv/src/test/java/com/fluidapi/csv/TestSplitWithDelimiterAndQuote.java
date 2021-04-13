@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.annotation.Testable;
 
-import com.fluidapi.csv.config.CsvColumn;
+import com.fluidapi.csv.annotations.CsvColumn;
 
 import lombok.Data;
 

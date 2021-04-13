@@ -1,4 +1,4 @@
-package com.fluidapi.csv.config;
+package com.fluidapi.csv.annotations;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;

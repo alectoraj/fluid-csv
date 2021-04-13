@@ -3,7 +3,7 @@ package com.fluidapi.csv.internal.mapper.provider.column;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-import com.fluidapi.csv.config.CsvFormat;
+import com.fluidapi.csv.annotations.CsvFormat;
 import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
 
 public abstract class AbstractTemporalMapper extends AbstractParseableColumnMapper {

@@ -19,9 +19,9 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.annotation.Testable;
 
-import com.fluidapi.csv.config.CsvColumn;
-import com.fluidapi.csv.config.CsvFormat;
-import com.fluidapi.csv.config.StripString;
+import com.fluidapi.csv.annotations.CsvColumn;
+import com.fluidapi.csv.annotations.CsvFormat;
+import com.fluidapi.csv.annotations.StripString;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

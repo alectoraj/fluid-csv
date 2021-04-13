@@ -5,7 +5,7 @@ import static lombok.AccessLevel.PROTECTED;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 
-import com.fluidapi.csv.config.CsvColumn;
+import com.fluidapi.csv.annotations.CsvColumn;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.fluidapi.csv.internal.mapper.provider.column;
 
 import java.util.function.UnaryOperator;
 
-import com.fluidapi.csv.config.StripString;
+import com.fluidapi.csv.annotations.StripString;
 import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
 
 public class StringMapper extends AbstractColumnMapper {

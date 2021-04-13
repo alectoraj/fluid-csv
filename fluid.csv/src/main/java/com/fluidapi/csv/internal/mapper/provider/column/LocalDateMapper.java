@@ -14,7 +14,7 @@ public class LocalDateMapper extends AbstractTemporalMapper {
 	}
 	
 	@Override
-	public Object transform(String in) {
+	public Object parse(String in) {
 		return LocalDate.parse(in, formatter);
 	}
 

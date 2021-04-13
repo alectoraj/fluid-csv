@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.fluidapi.csv.config.CsvFormat;
 import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
 
-public abstract class AbstractTemporalMapper extends AbstractColumnMapper {
+public abstract class AbstractTemporalMapper extends AbstractParseableColumnMapper {
 	
 	protected final DateTimeFormatter formatter;
 	
@@ -24,7 +24,7 @@ public abstract class AbstractTemporalMapper extends AbstractColumnMapper {
 				.map(info -> info.findAnnotation(CsvFormat.class))
 				.map(CsvFormat::value);
 	}
-
+	
 	protected abstract DateTimeFormatter defaultFormatter();
 	
 }

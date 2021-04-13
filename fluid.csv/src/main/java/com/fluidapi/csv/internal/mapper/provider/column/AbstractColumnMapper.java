@@ -25,13 +25,17 @@ public abstract class AbstractColumnMapper implements ColumnMapper {
 		if( in == null ) return null;
 		
 		String input = (String) in;
-		if( treatAsEmpty(input) ) return input;
+		if( treatAsEmpty(input) ) return unparsed();
 		
 		return transform(input);
 	}
 
 	protected boolean treatAsEmpty(String input) {
 		return isEmpty(input);
+	}
+	
+	protected Object unparsed() {
+		return null;
 	}
 	
 }

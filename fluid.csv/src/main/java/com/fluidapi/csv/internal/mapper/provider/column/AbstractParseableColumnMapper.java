@@ -4,15 +4,15 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
 
-public abstract class AbstractNumericColumnMapper extends AbstractColumnMapper {
+public abstract class AbstractParseableColumnMapper extends AbstractColumnMapper {
 
-	protected AbstractNumericColumnMapper(MemberInfo<?> memberInfo) {
+	protected AbstractParseableColumnMapper(MemberInfo<?> memberInfo) {
 		super(memberInfo);
 	}
 	
 	@Override
-	public Object transform(String in) {
-		return toNumber(in.strip());
+	public final Object transform(String in) {
+		return parse(in.strip());
 	}
 	
 	@Override
@@ -20,6 +20,6 @@ public abstract class AbstractNumericColumnMapper extends AbstractColumnMapper {
 		return isBlank(input);
 	}
 	
-	protected abstract Object toNumber(String in);
+	protected abstract Object parse(String in);
 	
 }

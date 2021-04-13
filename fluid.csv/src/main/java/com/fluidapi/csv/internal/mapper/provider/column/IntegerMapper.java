@@ -2,7 +2,7 @@ package com.fluidapi.csv.internal.mapper.provider.column;
 
 import com.fluidapi.csv.internal.mapper.provider.beans.MemberInfo;
 
-public class IntegerMapper extends AbstractNumericColumnMapper {
+public class IntegerMapper extends AbstractParseableColumnMapper {
 	
 	public static final Class<Integer>[] supports = support(Integer.class, int.class);
 
@@ -11,7 +11,7 @@ public class IntegerMapper extends AbstractNumericColumnMapper {
 	}
 	
 	@Override
-	protected Object toNumber(String in) {
+	protected Object parse(String in) {
 		return Integer.valueOf(in);
 	}
 		

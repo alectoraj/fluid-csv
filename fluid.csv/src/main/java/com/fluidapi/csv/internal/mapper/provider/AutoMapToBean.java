@@ -1,6 +1,5 @@
 package com.fluidapi.csv.internal.mapper.provider;
 
-import static com.fluidapi.csv.internal.validation.Requires.requireTrue;
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
@@ -35,9 +34,6 @@ public class AutoMapToBean<T> implements OrmMapper<T> {
 	@Override
 	public T apply(String[] columns) {
 		requireNonNull(columns, "columns");
-		requireTrue(columns.length == setters.size(),
-				() -> "column size mismatch | expected: %d, actual: %d".formatted(setters.size(), columns.length),
-				IllegalArgumentException::new);
 		
 		try {
 			return applyUnchecked(columns);
@@ -52,7 +48,8 @@ public class AutoMapToBean<T> implements OrmMapper<T> {
 		T instance = constructor.newInstance();
 
 		// set values using setters
-		IntStream.range(0, columns.length)
+		IntStream.range(0, columns.length)	// this allows user to have flexibility over available csv columns
+		.filter(setters::containsKey)		// this allows user to ignore certain columns from csv
 		.forEach(index -> {
 			setters.get(index)
 				.set(instance, columns[index]);

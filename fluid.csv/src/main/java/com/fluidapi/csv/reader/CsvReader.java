@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import com.fluidapi.csv.bean.Quote;
 import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
+import com.fluidapi.csv.reader.provider.linetocolumn.SplitByDelimiter;
 
 /**
  * Provides shorthand methods to all sorts of functionalities that this utility
@@ -25,7 +26,7 @@ public class CsvReader {
 	 * @return {@link CsvLineToColumns} as specified
 	 */
 	public static CsvLineToColumns delimiter(String regex) {
-		return null;
+		return new SplitByDelimiter(regex);
 	}
 
 	/**
@@ -35,7 +36,7 @@ public class CsvReader {
 	 * @return {@link CsvLineToColumns} as specified
 	 */
 	public static CsvLineToColumns delimiter(Pattern pattern) {
-		return null;
+		return new SplitByDelimiter(pattern);
 	}
 
 	/**
@@ -237,7 +238,7 @@ public class CsvReader {
 	 * @return {@link CsvColumnsToBean} as specified
 	 */
 	public static CsvColumnsToBean<String> string() {
-		return null;
+		return string(0);
 	}
 
 	/**

@@ -6,7 +6,16 @@ import static java.util.Objects.requireNonNull;
 import com.fluidapi.csv.service.CharIndexFinder;
 import com.fluidapi.csv.service.Cleanable;
 
-public class UnescapedCharIndexFinder implements CharIndexFinder, Cleanable {
+/**
+ * Finds the occurrence of asked character in the given string, from
+ * <em>after</em> the last returned index. Any occurrence of asked character
+ * prefixed with the configured escape character would be treated as a mismatch
+ * and would not be treated as a eureka moment.
+ * 
+ * @author Arindam Biswas
+ * @since 1.0
+ */
+public final class UnescapedCharIndexFinder implements CharIndexFinder, Cleanable {
 	
 	private char[] origin;
 	private char escape;

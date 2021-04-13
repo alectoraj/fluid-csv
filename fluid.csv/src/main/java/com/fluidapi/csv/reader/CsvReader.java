@@ -127,9 +127,10 @@ public class CsvReader {
 	 * In order to remove the spaces, use {@link #strip()} or {@link #trim()}
 	 * </p>
 	 * 
-	 * @param lengths zero or positive valued character lengths to specify per
-	 *                column width. zero lengths can be utilized to adjust column
-	 *                index in configuration, although discouraged from using
+	 * @param lengths zero or positive valued character lengths in ltr sequence to
+	 *                specify per column width. zero lengths can be utilized to
+	 *                adjust column index in configuration, although discouraged
+	 *                from using unless bean index configuration is really rigid
 	 * @return {@link CsvLineToColumns} as specified
 	 */
 	public static CsvLineToColumns fixed(int...lengths) {

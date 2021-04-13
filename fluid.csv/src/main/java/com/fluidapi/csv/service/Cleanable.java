@@ -15,7 +15,15 @@ import java.io.Closeable;
  */
 public interface Cleanable {
 	
+	/**
+	 * @return if already cleaned
+	 */
 	boolean isClean();
+	
+	/**
+	 * perform cleaning activity.
+	 * should happen only once.
+	 */
 	void clean();
 	
 }

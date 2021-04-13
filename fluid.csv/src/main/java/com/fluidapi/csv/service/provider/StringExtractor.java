@@ -7,7 +7,19 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 import com.fluidapi.csv.service.Cleanable;
 import com.fluidapi.csv.service.SafeExtractor;
 
-public class StringExtractor implements SafeExtractor<String>, Cleanable {
+/**
+ * A {@link SafeExtractor} for String.
+ * 
+ * <p>
+ * Maintains state, and call to {@link #next(int)} starts from <em>right
+ * after</em> where the last call left it with. Which means, first ever call to
+ * {@link #next(int)} starts from the beginning of given {@link String}.
+ * </p>
+ * 
+ * @author Arindam Biswas
+ * @since 1.0
+ */
+public final class StringExtractor implements SafeExtractor<String>, Cleanable {
 	
 	private String origin;
 	private int index;

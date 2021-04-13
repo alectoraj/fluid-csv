@@ -6,7 +6,10 @@ import java.util.regex.Pattern;
 import com.fluidapi.csv.bean.Quote;
 import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
+import com.fluidapi.csv.reader.provider.linetocolumn.NoSplit;
 import com.fluidapi.csv.reader.provider.linetocolumn.SplitByDelimiter;
+import com.fluidapi.csv.reader.provider.linetocolumn.SplitFixedLengths;
+import com.fluidapi.csv.reader.provider.linetocolumn.SplitQuoted;
 
 /**
  * Provides shorthand methods to all sorts of functionalities that this utility
@@ -54,7 +57,7 @@ public class CsvReader {
 	 * @see #dequote(Quote)
 	 */
 	public static CsvLineToColumns dequote(char quote) {
-		return null;
+		return dequote(quote, quote);
 	}
 
 	/**
@@ -72,7 +75,7 @@ public class CsvReader {
 	 * @see #dequote(Quote)
 	 */
 	public static CsvLineToColumns dequote(char quoteStart, char quoteEnd) {
-		return null;
+		return dequote(quoteStart, quoteEnd, '\\');
 	}
 
 	/**
@@ -95,7 +98,7 @@ public class CsvReader {
 	 * @see #dequote(Quote)
 	 */
 	public static CsvLineToColumns dequote(char quoteStart, char quoteEnd, char escapeIndicator) {
-		return null;
+		return dequote(new Quote(quoteStart, quoteEnd, escapeIndicator));
 	}
 
 	/**
@@ -112,7 +115,7 @@ public class CsvReader {
 	 * @see #dequote(char, char, char)
 	 */
 	public static CsvLineToColumns dequote(Quote quote) {
-		return null;
+		return new SplitQuoted(quote);
 	}
 	
 	/**
@@ -130,7 +133,7 @@ public class CsvReader {
 	 * @return {@link CsvLineToColumns} as specified
 	 */
 	public static CsvLineToColumns fixed(int...lengths) {
-		return null;
+		return new SplitFixedLengths(lengths);
 	}
 	
 	/**
@@ -142,7 +145,7 @@ public class CsvReader {
 	 * @return {@link CsvLineToColumns} as specified
 	 */
 	public static CsvLineToColumns line() {
-		return null;
+		return new NoSplit();
 	}
 	
 	// COLUMN DECORATOR //

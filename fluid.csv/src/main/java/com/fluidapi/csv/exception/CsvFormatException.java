@@ -1,9 +1,9 @@
 package com.fluidapi.csv.exception;
 
-public class CsvFormatException extends UncheckedException {
+public class CsvFormatException extends CsvException {
 
 	/**
-	 * configuration: default using {@link UncheckedException}
+	 * basic formation, specialized subclass of {@link RuntimeException}
 	 */
 	private static final long serialVersionUID = 1L;
 

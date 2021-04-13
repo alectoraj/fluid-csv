@@ -11,23 +11,28 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.fluidapi.csv.writer.serializer.CsvBeanMapper;
+
 /**
- * Specifies a property or setter/getter as a column in Csv file, along with
- * specifying which column does it represent
+ * Attaches a custom {@link CsvBeanMapper} to a property/getter.
+ * <p>
+ * This would overwrite existing default mapper if there was any
+ * </p>
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 2.0
  */
 @Documented
 @Retention(RUNTIME)
 @Target({ FIELD, METHOD })
-public @interface CsvColumn {
+public @interface CsvSerializer {
 
 	/**
-	 * Specifies the index of the column this property represents to
+	 * Specifies the custom bean mapper of the given property
 	 * 
-	 * @return 0-based index of the column in Csv
+	 * @return an implementation of {@link CsvBeanMapper} that takes in the attached
+	 *         data type
 	 */
-	int value();
+	Class<? extends CsvBeanMapper<?>> value();
 
 }

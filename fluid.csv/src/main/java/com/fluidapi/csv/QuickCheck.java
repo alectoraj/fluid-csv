@@ -1,6 +1,7 @@
 package com.fluidapi.csv;
 
-import static com.fluidapi.csv.reader.CsvReader.dequote;
+import static com.fluidapi.csv.reader.CsvReader.fixed;
+import static com.fluidapi.csv.reader.CsvReader.strip;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -10,7 +11,8 @@ public class QuickCheck {
 
 	public static void main(String[] args) {
 		
-		quoteCsv().map(dequote('"'))
+		fixCsv().map(fixed(12, 12, 7, 9, 10))
+		.map(strip())
 		.map(Arrays::asList)
 		.forEach(System.out::println);
 	}

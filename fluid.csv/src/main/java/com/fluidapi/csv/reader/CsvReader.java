@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import com.fluidapi.csv.bean.Quote;
 import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
+import com.fluidapi.csv.reader.provider.columndecorator.StripColumns;
+import com.fluidapi.csv.reader.provider.columndecorator.TrimColumns;
 import com.fluidapi.csv.reader.provider.linesplitter.NoSplit;
 import com.fluidapi.csv.reader.provider.linesplitter.SplitByDelimiter;
 import com.fluidapi.csv.reader.provider.linesplitter.SplitFixedLengths;
@@ -158,7 +160,7 @@ public class CsvReader {
 	 * @return {@link CsvColumnDecorator} as specified
 	 */
 	public static CsvColumnDecorator strip() {
-		return null;
+		return new StripColumns();
 	}
 	
 	/**
@@ -168,7 +170,7 @@ public class CsvReader {
 	 * @return {@link CsvColumnDecorator} as specified
 	 */
 	public static CsvColumnDecorator trim() {
-		return null;
+		return new TrimColumns();
 	}
 
 	/**

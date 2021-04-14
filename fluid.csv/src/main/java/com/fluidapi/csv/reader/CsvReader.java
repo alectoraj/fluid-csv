@@ -8,6 +8,10 @@ import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.columndecorator.StripColumns;
 import com.fluidapi.csv.reader.provider.columndecorator.TrimColumns;
+import com.fluidapi.csv.reader.provider.deserializer.PickBigDecimal;
+import com.fluidapi.csv.reader.provider.deserializer.PickInteger;
+import com.fluidapi.csv.reader.provider.deserializer.PickMapped;
+import com.fluidapi.csv.reader.provider.deserializer.PickString;
 import com.fluidapi.csv.reader.provider.linesplitter.NoSplit;
 import com.fluidapi.csv.reader.provider.linesplitter.SplitByDelimiter;
 import com.fluidapi.csv.reader.provider.linesplitter.SplitFixedLengths;
@@ -217,11 +221,12 @@ public class CsvReader {
 	 * Pick first column and convert it using given {@link CsvColumnMapper}
 	 * 
 	 * @param <T>         any bean type
-	 * @param withMapping map string column to desired bean
+	 * @param withMapping map string column to desired bean, should be capable of
+	 *                    handling {@code null}
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static <T> CsvBeanDeserializer<T> pick(CsvColumnMapper<T> withMapping) {
-		return null;
+		return pick(0, withMapping);
 	}
 	
 	/**
@@ -231,11 +236,12 @@ public class CsvReader {
 	 * @param <T>         any bean type
 	 * @param index       0-based index of the column, would supply {@code null} if
 	 *                    index exceeds length of column
-	 * @param withMapping map string column to desired bean
+	 * @param withMapping map string column to desired bean, should be capable of
+	 *                    handling {@code null}
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static <T> CsvBeanDeserializer<T> pick(int index, CsvColumnMapper<T> withMapping) {
-		return null;
+		return new PickMapped<>(index, withMapping);
 	}
 
 	/**
@@ -255,7 +261,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<String> string(int index) {
-		return null;
+		return new PickString(index);
 	}
 
 	/**
@@ -264,7 +270,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<Integer> integer() {
-		return null;
+		return integer(0);
 	}
 
 	/**
@@ -275,7 +281,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<Integer> integer(int index) {
-		return null;
+		return new PickInteger(index);
 	}
 
 	/**
@@ -284,7 +290,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<BigDecimal> bigDecimal() {
-		return null;
+		return bigDecimal(0);
 	}
 
 	/**
@@ -295,7 +301,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<BigDecimal> bigDecimal(int index) {
-		return null;
+		return new PickBigDecimal(index);
 	}
 	
 	/**

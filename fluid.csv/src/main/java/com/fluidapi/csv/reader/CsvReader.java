@@ -6,10 +6,10 @@ import java.util.regex.Pattern;
 import com.fluidapi.csv.bean.Quote;
 import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
-import com.fluidapi.csv.reader.provider.linetocolumn.NoSplit;
-import com.fluidapi.csv.reader.provider.linetocolumn.SplitByDelimiter;
-import com.fluidapi.csv.reader.provider.linetocolumn.SplitFixedLengths;
-import com.fluidapi.csv.reader.provider.linetocolumn.SplitQuoted;
+import com.fluidapi.csv.reader.provider.linesplitter.NoSplit;
+import com.fluidapi.csv.reader.provider.linesplitter.SplitByDelimiter;
+import com.fluidapi.csv.reader.provider.linesplitter.SplitFixedLengths;
+import com.fluidapi.csv.reader.provider.linesplitter.SplitQuoted;
 
 /**
  * Provides shorthand methods to all sorts of functionalities that this utility

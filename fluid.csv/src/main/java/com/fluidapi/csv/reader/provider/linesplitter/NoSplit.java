@@ -1,4 +1,4 @@
-package com.fluidapi.csv.reader.provider.linetocolumn;
+package com.fluidapi.csv.reader.provider.linesplitter;
 
 import com.fluidapi.csv.reader.CsvLineSplitter;
 import com.fluidapi.csv.reader.CsvReader;

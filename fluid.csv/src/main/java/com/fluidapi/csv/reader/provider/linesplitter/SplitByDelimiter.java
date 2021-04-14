@@ -1,4 +1,4 @@
-package com.fluidapi.csv.reader.provider.linetocolumn;
+package com.fluidapi.csv.reader.provider.linesplitter;
 
 import static java.util.regex.Pattern.compile;
 import static org.apache.commons.lang3.StringUtils.EMPTY;

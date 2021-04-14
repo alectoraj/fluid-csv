@@ -1,4 +1,4 @@
-package com.fluidapi.csv.reader.provider.linetocolumn;
+package com.fluidapi.csv.reader.provider.linesplitter;
 
 import static com.fluidapi.csv.service.CharIndexFinder.failResponse;
 import static com.fluidapi.csv.validaton.FailCheck.failIf;

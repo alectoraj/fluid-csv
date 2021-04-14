@@ -9,7 +9,7 @@ import java.util.function.Function;
  * @since 2.0
  */
 @FunctionalInterface
-public interface CsvColumnsToLine extends Function<String[], String> {
+public interface CsvColumnJoiner extends Function<String[], String> {
 
 	String join(String[] columns);
 	

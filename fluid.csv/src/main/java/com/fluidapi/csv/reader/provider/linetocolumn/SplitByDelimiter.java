@@ -6,7 +6,7 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
 import java.util.regex.Pattern;
 
-import com.fluidapi.csv.reader.CsvLineToColumns;
+import com.fluidapi.csv.reader.CsvLineSplitter;
 import com.fluidapi.csv.reader.CsvReader;
 
 import lombok.NonNull;
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
  * @see CsvReader#delimiter(String)
  */
 @RequiredArgsConstructor
-public class SplitByDelimiter implements CsvLineToColumns {
+public class SplitByDelimiter implements CsvLineSplitter {
 
 	/**
 	 * compiled {@link Pattern} for faster per-line processing

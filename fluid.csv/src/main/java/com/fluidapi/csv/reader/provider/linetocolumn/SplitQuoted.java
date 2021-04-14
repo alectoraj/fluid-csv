@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import com.fluidapi.csv.bean.Quote;
 import com.fluidapi.csv.exception.CsvFormatException;
-import com.fluidapi.csv.reader.CsvLineToColumns;
+import com.fluidapi.csv.reader.CsvLineSplitter;
 import com.fluidapi.csv.reader.CsvReader;
 import com.fluidapi.csv.service.CharIndexFinder;
 import com.fluidapi.csv.service.provider.UnescapedCharIndexFinder;
@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
  * @see CsvReader#dequote(char, char, char)
  */
 @RequiredArgsConstructor
-public class SplitQuoted implements CsvLineToColumns {
+public class SplitQuoted implements CsvLineSplitter {
 	
 	/**
 	 * property validation of quote is done by {@link Quote} class itself.

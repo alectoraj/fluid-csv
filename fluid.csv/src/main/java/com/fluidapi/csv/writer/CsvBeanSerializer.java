@@ -9,7 +9,7 @@ import java.util.function.Function;
  * @since 2.0
  */
 @FunctionalInterface
-public interface CsvBeanToColumns<T> extends Function<T, String[]> {
+public interface CsvBeanSerializer<T> extends Function<T, String[]> {
 
 	String[] convert(T t);
 	

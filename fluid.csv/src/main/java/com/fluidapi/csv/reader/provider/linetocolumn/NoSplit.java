@@ -1,6 +1,6 @@
 package com.fluidapi.csv.reader.provider.linetocolumn;
 
-import com.fluidapi.csv.reader.CsvLineToColumns;
+import com.fluidapi.csv.reader.CsvLineSplitter;
 import com.fluidapi.csv.reader.CsvReader;
 
 /**
@@ -11,7 +11,7 @@ import com.fluidapi.csv.reader.CsvReader;
  * 
  * @see CsvReader#line()
  */
-public class NoSplit implements CsvLineToColumns {
+public class NoSplit implements CsvLineSplitter {
 
 	@Override
 	public String[] split(String line) {

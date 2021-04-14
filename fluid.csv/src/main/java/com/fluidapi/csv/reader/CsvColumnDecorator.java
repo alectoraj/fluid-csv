@@ -12,8 +12,8 @@ import java.util.function.UnaryOperator;
  * <p>
  * On the contrary to {@link com.fluidapi.csv.writer.CsvColumnDecorator
  * Writer.CsvColumnDecorator} this decorator reads columns as produced by
- * {@link CsvLineToColumns} <em>from</em> Csv Lines and prepares them to be
- * mapped to Bean using {@link CsvColumnsToBean}
+ * {@link CsvLineSplitter} <em>from</em> Csv Lines and prepares them to be
+ * mapped to Bean using {@link CsvBeanDeserializer}
  * </p>
  * 
  * @author Arindam Biswas

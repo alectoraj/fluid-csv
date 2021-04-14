@@ -7,7 +7,7 @@ import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 
-import com.fluidapi.csv.reader.CsvLineToColumns;
+import com.fluidapi.csv.reader.CsvLineSplitter;
 import com.fluidapi.csv.reader.CsvReader;
 import com.fluidapi.csv.service.provider.StringExtractor;
 
@@ -30,7 +30,7 @@ import com.fluidapi.csv.service.provider.StringExtractor;
  * 
  * @see CsvReader#fixed(int...)
  */
-public class SplitFixedLengths implements CsvLineToColumns {
+public class SplitFixedLengths implements CsvLineSplitter {
 
 	/**
 	 * non-negative lengths in ltr sequence

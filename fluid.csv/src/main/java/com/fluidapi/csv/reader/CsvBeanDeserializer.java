@@ -9,7 +9,7 @@ import java.util.function.Function;
  * @since 1.0
  */
 @FunctionalInterface
-public interface CsvColumnsToBean<T> extends Function<String[], T> {
+public interface CsvBeanDeserializer<T> extends Function<String[], T> {
 	
 	T convert(String[] columns);
 	

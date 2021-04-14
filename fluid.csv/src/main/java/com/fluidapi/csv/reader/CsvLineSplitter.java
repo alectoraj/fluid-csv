@@ -9,7 +9,7 @@ import java.util.function.Function;
  * @since 1.0
  */
 @FunctionalInterface
-public interface CsvLineToColumns extends Function<String, String[]> {
+public interface CsvLineSplitter extends Function<String, String[]> {
 	
 	String[] split(String line);
 	

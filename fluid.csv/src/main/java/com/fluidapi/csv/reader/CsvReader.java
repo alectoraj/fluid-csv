@@ -26,9 +26,9 @@ public class CsvReader {
 	 * splits the string using the given regular expression
 	 * 
 	 * @param regex the regular expression to split the string by
-	 * @return {@link CsvLineToColumns} as specified
+	 * @return {@link CsvLineSplitter} as specified
 	 */
-	public static CsvLineToColumns delimiter(String regex) {
+	public static CsvLineSplitter delimiter(String regex) {
 		return new SplitByDelimiter(regex);
 	}
 
@@ -36,9 +36,9 @@ public class CsvReader {
 	 * splits the string using the given parsed regular expression
 	 * 
 	 * @param pattern compiled regular expression to split the string by
-	 * @return {@link CsvLineToColumns} as specified
+	 * @return {@link CsvLineSplitter} as specified
 	 */
-	public static CsvLineToColumns delimiter(Pattern pattern) {
+	public static CsvLineSplitter delimiter(Pattern pattern) {
 		return new SplitByDelimiter(pattern);
 	}
 
@@ -51,12 +51,12 @@ public class CsvReader {
 	 * 
 	 * @param quote character that defines the start as well as end of a quotation,
 	 *              cannot be \
-	 * @return {@link CsvLineToColumns} as specified
+	 * @return {@link CsvLineSplitter} as specified
 	 * @see #dequote(char, char)
 	 * @see #dequote(char, char, char)
 	 * @see #dequote(Quote)
 	 */
-	public static CsvLineToColumns dequote(char quote) {
+	public static CsvLineSplitter dequote(char quote) {
 		return dequote(quote, quote);
 	}
 
@@ -69,12 +69,12 @@ public class CsvReader {
 	 * 
 	 * @param quoteStart character that defines the start of a quotation, cannot be \
 	 * @param quoteEnd   character that defines the end of a quotation, cannot be \
-	 * @return {@link CsvLineToColumns} as specified
+	 * @return {@link CsvLineSplitter} as specified
 	 * @see #dequote(char)
 	 * @see #dequote(char, char, char)
 	 * @see #dequote(Quote)
 	 */
-	public static CsvLineToColumns dequote(char quoteStart, char quoteEnd) {
+	public static CsvLineSplitter dequote(char quoteStart, char quoteEnd) {
 		return dequote(quoteStart, quoteEnd, '\\');
 	}
 
@@ -92,12 +92,12 @@ public class CsvReader {
 	 * @param escapeIndicator character that defines which character would mark a
 	 *                        quote as a simple content character, must not be same
 	 *                        as {@code quoteStart} or {@code quoteEnd}, e.g. \
-	 * @return {@link CsvLineToColumns} as specified
+	 * @return {@link CsvLineSplitter} as specified
 	 * @see #dequote(char)
 	 * @see #dequote(char, char)
 	 * @see #dequote(Quote)
 	 */
-	public static CsvLineToColumns dequote(char quoteStart, char quoteEnd, char escapeIndicator) {
+	public static CsvLineSplitter dequote(char quoteStart, char quoteEnd, char escapeIndicator) {
 		return dequote(new Quote(quoteStart, quoteEnd, escapeIndicator));
 	}
 
@@ -109,12 +109,12 @@ public class CsvReader {
 	 * result in {@link CsvFormatException}
 	 * 
 	 * @param quote information regarding quotation
-	 * @return {@link CsvLineToColumns} as specified
+	 * @return {@link CsvLineSplitter} as specified
 	 * @see #dequote(char)
 	 * @see #dequote(char, char)
 	 * @see #dequote(char, char, char)
 	 */
-	public static CsvLineToColumns dequote(Quote quote) {
+	public static CsvLineSplitter dequote(Quote quote) {
 		return new SplitQuoted(quote);
 	}
 	
@@ -131,9 +131,9 @@ public class CsvReader {
 	 *                specify per column width. zero lengths can be utilized to
 	 *                adjust column index in configuration, although discouraged
 	 *                from using unless bean index configuration is really rigid
-	 * @return {@link CsvLineToColumns} as specified
+	 * @return {@link CsvLineSplitter} as specified
 	 */
-	public static CsvLineToColumns fixed(int...lengths) {
+	public static CsvLineSplitter fixed(int...lengths) {
 		return new SplitFixedLengths(lengths);
 	}
 	
@@ -143,9 +143,9 @@ public class CsvReader {
 	 * Useful when you still need some transformation regarding that column, and
 	 * that the provided mapping providers would come in handy.
 	 * 
-	 * @return {@link CsvLineToColumns} as specified
+	 * @return {@link CsvLineSplitter} as specified
 	 */
-	public static CsvLineToColumns line() {
+	public static CsvLineSplitter line() {
 		return new NoSplit();
 	}
 	
@@ -216,9 +216,9 @@ public class CsvReader {
 	 * 
 	 * @param <T>         any bean type
 	 * @param withMapping map string column to desired bean
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static <T> CsvColumnsToBean<T> pick(CsvColumnMapper<T> withMapping) {
+	public static <T> CsvBeanDeserializer<T> pick(CsvColumnMapper<T> withMapping) {
 		return null;
 	}
 	
@@ -230,18 +230,18 @@ public class CsvReader {
 	 * @param index       0-based index of the column, would supply {@code null} if
 	 *                    index exceeds length of column
 	 * @param withMapping map string column to desired bean
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static <T> CsvColumnsToBean<T> pick(int index, CsvColumnMapper<T> withMapping) {
+	public static <T> CsvBeanDeserializer<T> pick(int index, CsvColumnMapper<T> withMapping) {
 		return null;
 	}
 
 	/**
 	 * Picks first column as {@link String}
 	 * 
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static CsvColumnsToBean<String> string() {
+	public static CsvBeanDeserializer<String> string() {
 		return string(0);
 	}
 
@@ -250,18 +250,18 @@ public class CsvReader {
 	 * 
 	 * @param index 0-based index of the column, would supply {@code null} if index
 	 *              exceeds length of column
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static CsvColumnsToBean<String> string(int index) {
+	public static CsvBeanDeserializer<String> string(int index) {
 		return null;
 	}
 
 	/**
 	 * Picks first column as {@link Integer}
 	 * 
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static CsvColumnsToBean<Integer> integer() {
+	public static CsvBeanDeserializer<Integer> integer() {
 		return null;
 	}
 
@@ -270,18 +270,18 @@ public class CsvReader {
 	 * 
 	 * @param index 0-based index of the column, would supply {@code null} if index
 	 *              exceeds length of column
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static CsvColumnsToBean<Integer> integer(int index) {
+	public static CsvBeanDeserializer<Integer> integer(int index) {
 		return null;
 	}
 
 	/**
 	 * Picks first column as {@link BigDecimal}
 	 * 
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static CsvColumnsToBean<BigDecimal> bigDecimal() {
+	public static CsvBeanDeserializer<BigDecimal> bigDecimal() {
 		return null;
 	}
 
@@ -290,9 +290,9 @@ public class CsvReader {
 	 * 
 	 * @param index 0-based index of the column, would supply {@code null} if index
 	 *              exceeds length of column
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static CsvColumnsToBean<BigDecimal> bigDecimal(int index) {
+	public static CsvBeanDeserializer<BigDecimal> bigDecimal(int index) {
 		return null;
 	}
 	
@@ -302,9 +302,9 @@ public class CsvReader {
 	 * 
 	 * @param <T>  any bean type
 	 * @param type {@link Class} type of the given bean
-	 * @return {@link CsvColumnsToBean} as specified
+	 * @return {@link CsvBeanDeserializer} as specified
 	 */
-	public static <T> CsvColumnsToBean<T> auto(Class<T> type) {
+	public static <T> CsvBeanDeserializer<T> auto(Class<T> type) {
 		return null;
 	}
 	

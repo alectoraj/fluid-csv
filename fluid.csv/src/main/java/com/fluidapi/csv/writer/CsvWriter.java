@@ -16,9 +16,9 @@ public class CsvWriter {
 	 * columns to line
 	 * 
 	 * @param delimiter a simple plain text, usually ; or ,
-	 * @return {@link CsvColumnsToLine} as specified
+	 * @return {@link CsvColumnJoiner} as specified
 	 */
-	public static CsvColumnsToLine delimiter(String delimiter) {
+	public static CsvColumnJoiner delimiter(String delimiter) {
 		return null;
 	}
 	
@@ -30,9 +30,9 @@ public class CsvWriter {
 	 * @param lengths zero or positive valued character lengths to specify per
 	 *                column width. zero lengths can be utilized to adjust column
 	 *                index in configuration, although discouraged from using
-	 * @return {@link CsvColumnsToLine} as specified
+	 * @return {@link CsvColumnJoiner} as specified
 	 */
-	public static CsvColumnsToLine fixed(int...lengths) {
+	public static CsvColumnJoiner fixed(int...lengths) {
 		return null;
 	}
 	
@@ -41,9 +41,9 @@ public class CsvWriter {
 	 * 
 	 * @param index 0-based index of the intended column, would result in
 	 *              {@code null} if index exceeds length
-	 * @return {@link CsvColumnsToLine} as specified
+	 * @return {@link CsvColumnJoiner} as specified
 	 */
-	public static CsvColumnsToLine only(int index) {
+	public static CsvColumnJoiner only(int index) {
 		return null;
 	}
 	
@@ -103,9 +103,9 @@ public class CsvWriter {
 	 * 
 	 * @param <T>  any bean type
 	 * @param type {@link Class} information of the bean
-	 * @return {@link CsvBeanToColumns} as specified
+	 * @return {@link CsvBeanSerializer} as specified
 	 */
-	public static <T> CsvBeanToColumns<T> auto(Class<T> type) {
+	public static <T> CsvBeanSerializer<T> auto(Class<T> type) {
 		return null;
 	}
 	

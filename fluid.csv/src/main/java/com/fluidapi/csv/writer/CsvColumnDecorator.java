@@ -12,7 +12,7 @@ import java.util.function.UnaryOperator;
  * <p>
  * On the contrary to {@link com.fluidapi.csv.reader.CsvColumnDecorator
  * Reader.CsvColumnDecorator} this decorator reads columns as produced by
- * {@link CsvBeanToColumns} and prepares them before being converted to Csv
+ * {@link CsvBeanSerializer} and prepares them before being converted to Csv
  * Lines.
  * </p>
  * 

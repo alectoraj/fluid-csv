@@ -19,5 +19,19 @@ public class MethodInfo extends ExecutableInfo<Method> {
 		return isUnitArgCall()
 			&& it.getName().matches("^(set)[A-Z]");
 	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if( object instanceof MethodInfo other ) {
+			return it.equals(other.it);
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return it.hashCode();
+	}
 
 }

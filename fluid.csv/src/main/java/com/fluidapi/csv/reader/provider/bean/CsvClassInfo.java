@@ -13,7 +13,7 @@ public class CsvClassInfo<T> extends ClassInfo<T> {
 	/**
 	 * sorts by least number of parameters first
 	 */
-	public Stream<ConstructorInfo> csvConstructors() {
+	public Stream<ConstructorInfo<T>> csvConstructors() {
 		return constructors().filter(ConstructorInfo::isCsvConstructor);
 	}
 	

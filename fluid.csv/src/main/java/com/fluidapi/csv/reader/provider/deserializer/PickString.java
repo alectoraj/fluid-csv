@@ -1,5 +1,7 @@
 package com.fluidapi.csv.reader.provider.deserializer;
 
+import com.fluidapi.csv.reader.provider.deserializer.column.MapString;
+
 /**
  * safely picks the string value at given index, and returns whatever is there.
  * 
@@ -9,7 +11,7 @@ package com.fluidapi.csv.reader.provider.deserializer;
 public class PickString extends PickMapped<String> {
 
 	public PickString(int index) {
-		super(index, t -> t);
+		super(index, new MapString());
 	}
 
 }

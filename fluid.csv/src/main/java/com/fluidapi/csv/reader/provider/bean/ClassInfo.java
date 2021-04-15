@@ -2,7 +2,9 @@ package com.fluidapi.csv.reader.provider.bean;
 
 import static java.util.Arrays.stream;
 
+import java.lang.reflect.Constructor;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import lombok.NonNull;
@@ -18,11 +20,19 @@ public class ClassInfo<T> extends AnnotatedInfo<Class<T>> implements TypeInfo<Cl
 		return it;
 	}
 	
+	public Optional<ConstructorInfo<T>> defaultConstructor() {
+		return constructors()
+				.filter(ConstructorInfo::isDefaultConstructor)
+				.findAny();
+	}
+	
 	/**
 	 * sorts by least number of parameters first
 	 */
-	public Stream<ConstructorInfo> constructors() {
+	@SuppressWarnings("unchecked")
+	public Stream<ConstructorInfo<T>> constructors() {
 		return stream(it.getConstructors())
+				.map(constructor -> (Constructor<T>) constructor)
 				.map(ConstructorInfo::new)
 				.sorted(Comparator.comparingInt(ConstructorInfo::getParameterCount));
 	}

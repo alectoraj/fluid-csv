@@ -8,6 +8,7 @@ import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.columndecorator.StripColumns;
 import com.fluidapi.csv.reader.provider.columndecorator.TrimColumns;
+import com.fluidapi.csv.reader.provider.deserializer.AutoBeanDeserializer;
 import com.fluidapi.csv.reader.provider.deserializer.PickBigDecimal;
 import com.fluidapi.csv.reader.provider.deserializer.PickInteger;
 import com.fluidapi.csv.reader.provider.deserializer.PickMapped;
@@ -313,7 +314,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static <T> CsvBeanDeserializer<T> auto(Class<T> type) {
-		return null;
+		return new AutoBeanDeserializer<>(type);
 	}
 	
 }

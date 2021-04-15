@@ -20,5 +20,5 @@ public interface CsvColumnMapper<T> extends Function<String, T> {
 	default T apply(String t) {
 		return map(t);
 	}
-	
+
 }

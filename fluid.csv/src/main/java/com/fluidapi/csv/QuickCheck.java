@@ -1,19 +1,27 @@
 package com.fluidapi.csv;
 
+import static com.fluidapi.csv.reader.CsvReader.auto;
 import static com.fluidapi.csv.reader.CsvReader.fixed;
-import static com.fluidapi.csv.reader.CsvReader.strip;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
+
+import com.fluidapi.csv.annotations.CsvColumn;
+import com.fluidapi.csv.annotations.CsvStrip;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @SuppressWarnings("unused")
 public class QuickCheck {
 
 	public static void main(String[] args) {
-		
+		runCsv();
+	}
+
+	private static void runCsv() {
 		fixCsv().map(fixed(12, 12, 7, 9, 10))
-		.map(strip())
-		.map(Arrays::asList)
+//		.map(strip())
+		.map(auto(God.class))
 		.forEach(System.out::println);
 	}
 
@@ -45,5 +53,28 @@ public class QuickCheck {
 				Yamamoto    Kazon       1821            Japan
 				"""
 				.lines();
+	}
+	
+	@Data
+	@NoArgsConstructor
+	public static class God {
+		
+		@CsvColumn(1)
+		private String firstName;
+
+		@CsvStrip
+		@CsvColumn(1)
+		private String lastName;
+		
+		@CsvStrip
+		@CsvColumn(2)
+		private int age;
+		
+		@CsvColumn(3)
+		private String joined;
+		
+		@CsvColumn(4)
+		private String from;
+		
 	}
 }

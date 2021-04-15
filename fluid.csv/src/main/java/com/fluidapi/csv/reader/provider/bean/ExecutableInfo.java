@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 import lombok.NonNull;
 
-public class ExecutableInfo<T extends Executable> extends MemberInfo<T> {
+public abstract class ExecutableInfo<T extends Executable> extends MemberInfo<T> {
 
 	public ExecutableInfo(@NonNull T it) {
 		super(it);

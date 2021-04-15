@@ -9,7 +9,10 @@ import java.lang.reflect.AnnotatedElement;
 public interface TypeInfo<T extends AnnotatedElement> {
 	
 	Class<?> getType();
-	
+
+	default boolean isOfType(Class<?> type) {
+		return getType().equals(type);
+	}
 	default boolean isOfType(Class<?>...types) {
 		return stream(types).anyMatch(getType()::equals);
 	}

@@ -16,7 +16,7 @@ import com.fluidapi.csv.reader.CsvColumnDecorator;
  * @author Arindam Biswas
  * @since 1.0
  */
-public abstract class AbstractSafeColumnDecorator implements CsvColumnDecorator {
+public abstract class SafeColumnDecorator implements CsvColumnDecorator {
 
 	@Override
 	public final String[] decorate(String[] columns) {

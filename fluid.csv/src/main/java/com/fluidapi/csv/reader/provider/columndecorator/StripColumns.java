@@ -9,7 +9,7 @@ import com.fluidapi.csv.reader.CsvColumnDecorator;
  * @since 1.0
  * @see TrimColumns
  */
-public class StripColumns extends AbstractSafeColumnDecorator implements CsvColumnDecorator {
+public class StripColumns extends SafeColumnDecorator implements CsvColumnDecorator {
 
 	@Override
 	protected String decorateSafe(String column) {

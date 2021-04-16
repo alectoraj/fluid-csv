@@ -12,7 +12,7 @@ import com.fluidapi.csv.reader.provider.bean.TypeInfo;
 
 public class MapSupport<T> {
 	
-	private final Map<Class<?>, MapConstructor<T>> supportMap;
+	protected final Map<Class<?>, MapConstructor<T>> supportMap;
 	
 	public MapSupport() {
 		supportMap = new ConcurrentHashMap<>();

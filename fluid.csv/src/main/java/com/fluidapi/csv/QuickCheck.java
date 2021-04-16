@@ -1,16 +1,17 @@
 package com.fluidapi.csv;
 
 import static com.fluidapi.csv.reader.CsvReader.auto;
+import static com.fluidapi.csv.reader.CsvReader.delimiter;
 import static com.fluidapi.csv.reader.CsvReader.fixed;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.stream.Stream;
 
 import com.fluidapi.csv.annotations.CsvColumn;
-import com.fluidapi.csv.annotations.CsvDeserializer;
 import com.fluidapi.csv.annotations.CsvFormat;
 import com.fluidapi.csv.annotations.CsvStrip;
-import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,13 @@ public class QuickCheck {
 
 	public static void main(String[] args) {
 //		runCsv();
+		runCsv2();
+	}
+
+	private static void runCsv2() {
+		delimCsv2().map(delimiter(";"))
+		.map(auto(MonthAndYear.class))
+		.forEach(System.out::println);
 	}
 
 	private static void runCsv() {
@@ -27,6 +35,14 @@ public class QuickCheck {
 //		.map(strip())
 		.map(auto(God.class))
 		.forEach(System.out::println);
+	}
+	
+	private static Stream<String> delimCsv2() {
+		return """
+				JANUARY;2020
+				FEBRUARY;2018
+				"""
+				.lines();
 	}
 
 	private static Stream<String> delimCsv() {
@@ -74,8 +90,6 @@ public class QuickCheck {
 		@CsvColumn(2)
 		private int age;
 
-		private int ageMinusX;
-
 		@CsvStrip
 		@CsvColumn(3)
 		@CsvFormat("uuuuMMMd")
@@ -83,22 +97,16 @@ public class QuickCheck {
 		
 		@CsvColumn(4)
 		private String from;
-
-		@CsvStrip
-		@CsvColumn(2)
-		@CsvDeserializer(AgeDeserializer.class)
-		public void setAltAge(int age) {
-			ageMinusX = age;
-		}
 		
 	}
 	
-	public static class AgeDeserializer implements CsvColumnMapper<Integer> {
-
-		@Override
-		public Integer map(String column) {
-			return Integer.parseInt(column) - 1000;
-		}
+	@Data
+	public static class MonthAndYear {
 		
+		@CsvColumn(0)
+		private Month month;
+		
+		@CsvColumn(1)
+		private Year year;
 	}
 }

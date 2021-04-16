@@ -60,7 +60,8 @@ public class ColumnMappers {
 				MapNumber.support,
 				MapWrapper.support,
 				MapTemporal.support,
-				MapOldTemporal.support
+				MapOldTemporal.support,
+				MapEnum.support
 		)
 		
 		// find the supported, use it to get the mapper and return

@@ -1,6 +1,6 @@
 package com.fluidapi.csv.reader.provider.deserializer;
 
-import com.fluidapi.csv.reader.provider.deserializer.column.MapInteger;
+import com.fluidapi.csv.reader.provider.deserializer.column.number.MapInteger;
 
 /**
  * safely picks the string value at given index, parses as integer and returns.

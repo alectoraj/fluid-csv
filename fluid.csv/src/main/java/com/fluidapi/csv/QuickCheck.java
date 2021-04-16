@@ -3,9 +3,11 @@ package com.fluidapi.csv;
 import static com.fluidapi.csv.reader.CsvReader.auto;
 import static com.fluidapi.csv.reader.CsvReader.fixed;
 
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import com.fluidapi.csv.annotations.CsvColumn;
+import com.fluidapi.csv.annotations.CsvFormat;
 import com.fluidapi.csv.annotations.CsvStrip;
 
 import lombok.Data;
@@ -49,7 +51,7 @@ public class QuickCheck {
 		return	"""
 				Zeus        Nigoi       9012   1620JAN20Olympus
 				Philips     Plodymus    5120   1842NOV7 Europe
-				Nishen      Guhoi       712    1921MAR1
+				Nishen      Guhoi              1921MAR1
 				Yamamoto    Kazon       1821            Japan
 				"""
 				.lines();
@@ -69,9 +71,11 @@ public class QuickCheck {
 		@CsvStrip
 		@CsvColumn(2)
 		private int age;
-		
+
+		@CsvStrip
 		@CsvColumn(3)
-		private String joined;
+		@CsvFormat("uuuuMMMd")
+		private LocalDate joined;
 		
 		@CsvColumn(4)
 		private String from;

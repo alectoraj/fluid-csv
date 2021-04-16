@@ -1,28 +1,56 @@
 package com.fluidapi.csv.reader.provider.deserializer.column;
 
-import java.math.BigDecimal;
+import static com.fluidapi.csv.validaton.FailCheck.failIf;
+
+import java.util.stream.Stream;
 
 import com.fluidapi.csv.annotations.CsvStrip;
 import com.fluidapi.csv.annotations.CsvTrim;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.reader.provider.bean.TypeInfo;
+import com.fluidapi.csv.reader.provider.deserializer.column.number.MapNumber;
+import com.fluidapi.csv.reader.provider.deserializer.column.primitive.MapPrimitive;
+import com.fluidapi.csv.reader.provider.deserializer.column.temporal.MapTemporal;
 
 public class ColumnMappers {
 	
 	public static CsvColumnMapper<?> of(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {
 		
 		CsvColumnMapper<String> trimming = findTrimming(origin);
+		CsvColumnMapper<?> mapper = findSupportOf(typeInfo, origin);
 		
-		if( typeInfo.isOfType(String.class) ) return trimmerOrString(trimming);
-		if( typeInfo.isOfType(Integer.class, int.class) ) return join(trimming, new MapInteger());
-		if( typeInfo.isOfType(BigDecimal.class) ) return join(trimming, new MapBigDecimal());
-		
-		return null;
+		// check if anything default could be found
+		failIf(mapper == null,
+				"no mapper supported for %s, try using @CsvDeserialzier"
+				.formatted(typeInfo.getType()),
+				UnsupportedOperationException::new);
+
+		// join prefix mapper with field mapper
+		return join(trimming, mapper);
 	}
 
-	private static CsvColumnMapper<?> trimmerOrString(CsvColumnMapper<?> trimming) {
-		return trimming != null ? trimming : new MapString();
+	private static CsvColumnMapper<?> findSupportOf(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {
+		
+		// because we know MapSupport uses Class<?> info as key,
+		// let's keep it handy to reduce at least 1 set of redundant call stack
+		Class<?> type = typeInfo.getType();
+		
+		return Stream.of(
+			//	support maps in preference order
+			//	i.e. first one supporting the type is taken
+				MapString.support,
+				MapPrimitive.support,
+				MapNumber.support,
+				MapTemporal.support
+		)
+		
+		// find the supported, use it to get the mapper and return
+		.filter( support -> support.supports(type) )
+		.map( support -> support.of(typeInfo, origin) )
+		.findFirst()
+		.orElse(null);
+		
 	}
 
 	private static CsvColumnMapper<String> findTrimming(AnnotatedInfo<?> origin) {

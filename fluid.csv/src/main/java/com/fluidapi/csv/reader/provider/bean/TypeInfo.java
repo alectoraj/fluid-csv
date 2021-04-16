@@ -10,6 +10,9 @@ public interface TypeInfo<T extends AnnotatedElement> {
 	
 	Class<?> getType();
 
+	default boolean isChildOf(Class<?> type) {
+		return type.isAssignableFrom(getType());
+	}
 	default boolean isOfType(Class<?> type) {
 		return getType().equals(type);
 	}

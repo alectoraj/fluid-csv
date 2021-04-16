@@ -2,7 +2,7 @@ package com.fluidapi.csv.reader.provider.deserializer;
 
 import java.math.BigDecimal;
 
-import com.fluidapi.csv.reader.provider.deserializer.column.MapBigDecimal;
+import com.fluidapi.csv.reader.provider.deserializer.column.number.MapBigDecimal;
 
 /**
  * safely picks the string value at given index, parses as {@link BigDecimal} and returns.

@@ -15,9 +15,11 @@ import java.util.stream.Stream;
  * @since 1.0
  */
 public interface StreamUtils {
+	
+	int THRESHOLD = 2 << 5;
 
 	/**
-	 * creates parallel stream if length greater than 64.
+	 * creates parallel stream if length greater than {@value #THRESHOLD}
 	 * 
 	 * @param stream          the stream to possibly parallelize
 	 * @param estimatedLength since measuring length in stream would end it, asking
@@ -25,7 +27,7 @@ public interface StreamUtils {
 	 * @return a parallel stream if large enough, or as is if small enough.
 	 */
 	static IntStream fastStream(IntStream stream, int estimatedLength) {
-		return estimatedLength > 64 ? stream.parallel() : stream;
+		return estimatedLength > THRESHOLD ? stream.parallel() : stream;
 	}
 
 	/**
@@ -36,5 +38,28 @@ public interface StreamUtils {
 	 */
 	static IntStream fastStream(int... ints) {
 		return fastStream(stream(ints), ints.length);
+	}
+
+	/**
+	 * creates parallel stream if length greater than {@value #THRESHOLD}
+	 * 
+	 * @param stream          the stream to possibly parallelize
+	 * @param estimatedLength since measuring length in stream would end it, asking
+	 *                        the estimated or real length from you
+	 * @return a parallel stream if large enough, or as is if small enough.
+	 */
+	static <T> Stream<T> fastStream(Stream<T> stream, int estimatedLength) {
+		return estimatedLength > THRESHOLD ? stream.parallel() : stream;
+	}
+
+	/**
+	 * creates parallel stream if length greater than 64, else a regular stream
+	 * 
+	 * @param ints {@code int} array of elements
+	 * @return a parallel stream if large enough, or as is if small enough.
+	 */
+	@SafeVarargs
+	static <T> Stream<T> fastStream(T...ts) {
+		return fastStream(stream(ts), ts.length);
 	}
 }

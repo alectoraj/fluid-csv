@@ -16,10 +16,10 @@ import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.columndecorator.StripColumns;
 import com.fluidapi.csv.reader.provider.columndecorator.TrimColumns;
 import com.fluidapi.csv.reader.provider.deserializer.AutoBeanDeserializer;
-import com.fluidapi.csv.reader.provider.deserializer.PickBigDecimal;
-import com.fluidapi.csv.reader.provider.deserializer.PickInteger;
 import com.fluidapi.csv.reader.provider.deserializer.PickMapped;
-import com.fluidapi.csv.reader.provider.deserializer.PickString;
+import com.fluidapi.csv.reader.provider.deserializer.column.MapString;
+import com.fluidapi.csv.reader.provider.deserializer.column.number.MapBigDecimal;
+import com.fluidapi.csv.reader.provider.deserializer.column.number.MapInteger;
 import com.fluidapi.csv.reader.provider.linesplitter.NoSplit;
 import com.fluidapi.csv.reader.provider.linesplitter.SplitByDelimiter;
 import com.fluidapi.csv.reader.provider.linesplitter.SplitFixedLengths;
@@ -269,7 +269,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<String> string(int index) {
-		return new PickString(index);
+		return pick(index, new MapString());
 	}
 
 	/**
@@ -289,7 +289,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<Integer> integer(int index) {
-		return new PickInteger(index);
+		return pick(index, new MapInteger());
 	}
 
 	/**
@@ -309,7 +309,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<BigDecimal> bigDecimal(int index) {
-		return new PickBigDecimal(index);
+		return pick(index, new MapBigDecimal());
 	}
 	
 	/**

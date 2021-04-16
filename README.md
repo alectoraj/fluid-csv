@@ -29,5 +29,5 @@ Stream<Sting>
 > `string() | string(n) | integer() | bigDecimal() | orm(User.class)`
 
 # ⚠ CAUTION 
-Java 15+ compatible
+Java 15+ compatible\
 Jakarta Validation API is used

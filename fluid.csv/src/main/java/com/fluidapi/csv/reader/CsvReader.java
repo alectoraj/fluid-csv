@@ -1,8 +1,15 @@
 package com.fluidapi.csv.reader;
 
 import java.math.BigDecimal;
+import java.time.Year;
 import java.util.regex.Pattern;
 
+import org.hibernate.validator.HibernateValidator;
+
+import com.fluidapi.csv.annotations.CsvColumn;
+import com.fluidapi.csv.annotations.CsvDeserializer;
+import com.fluidapi.csv.annotations.CsvStrip;
+import com.fluidapi.csv.annotations.CsvTrim;
 import com.fluidapi.csv.bean.Quote;
 import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
@@ -306,8 +313,48 @@ public class CsvReader {
 	}
 	
 	/**
-	 * Translates the provided columns to said bean type using specified
-	 * configuration in the bean
+	 * Automatically maps all fields as configured. here's a few rules one need to
+	 * follow as well as few flexibilities one may utilize -
+	 * 
+	 * <p>
+	 * <h3>RULES</h3>
+	 * <ul>
+	 * <li>Must expose the default constructor - used to create the constructor</li>
+	 * <li>{@link CsvColumn @CsvColumn} must be provided with a 0-based index</li>
+	 * <li>if used on a method, it should be a setter, i.e.
+	 * <ul>
+	 * <li>single parameter method</li>
+	 * <li>return type as {@code void}</li>
+	 * <li>follows a setter's naming scheme -
+	 * <q>the prefix "set" followed by a UpperCamelCase text</q></li>
+	 * </ul>
+	 * </li>
+	 * <li>does not support nested/embedded types by default. you'll have to write a
+	 * custom type for this purpose (check flexibilities)</li>
+	 * </ul>
+	 * </p>
+	 * 
+	 * <p>
+	 * <h3>FLEXIBILITIES</h3>
+	 * <ul>
+	 * <li>If a type is not supported by default, you can always write your own
+	 * {@link CsvColumnMapper} and configure it to be used instead, using
+	 * {@link CsvDeserializer @CsvDeserializer} annotation</li>
+	 * <li>Preprocessors like {@link CsvStrip} or {@link CsvTrim} will always be
+	 * executed even if you're using a custom {@link CsvDeserializer}</li>
+	 * <li>{@link CsvColumn @CsvColumn} can be used on more than one field and
+	 * setter, and all will be populated with the said column, and each can have
+	 * their own compatible data type. i.e. you can map a 4-digit number to all of a
+	 * {@link String} field, a {@link Number} field, and a {@link Year} field, and
+	 * all will be populated separately</li>
+	 * <li>Thanks to this, you may avoid using {@link CsvDeserializer} with a
+	 * separate class for simpler types and just have a setter with {@link String}
+	 * or a supported argument and construct your custom type right in the
+	 * setter</li>
+	 * <li>You can use {@code javax.validation} annotations and they'll be validated
+	 * using {@link HibernateValidator}</li>
+	 * </ul>
+	 * </p>
 	 * 
 	 * @param <T>  any bean type
 	 * @param type {@link Class} type of the given bean

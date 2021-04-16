@@ -12,15 +12,19 @@ public class MethodInfo extends ExecutableInfo<Method> {
 		super(it);
 	}
 	
+	public Class<?> returnType() {
+		return it.getReturnType();
+	}
+	
 	public boolean isGetter() {
 		return isNoArgCall()
-			// TODO check return type non void
+			&& !returnType().equals(void.class)
 			&& StringPredicates.isGetter.test(it.getName());
 	}
 	
 	public boolean isSetter() {
 		return isUnitArgCall()
-			// TODO check void return type
+			&& returnType().equals(void.class)
 			&& StringPredicates.isSetter.test(it.getName());
 	}
 	

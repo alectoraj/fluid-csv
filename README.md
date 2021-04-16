@@ -28,6 +28,6 @@ Stream<Sting>
 > define how split line should be mapped to java object\
 > `string() | string(n) | integer() | bigDecimal() | orm(User.class)`
 
-# CAUTION ⚠ 
+# ⚠ CAUTION 
 Java 15+ compatible
 Jakarta Validation API is used

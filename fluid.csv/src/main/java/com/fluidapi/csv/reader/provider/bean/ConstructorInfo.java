@@ -14,12 +14,7 @@ public class ConstructorInfo<T> extends ExecutableInfo<Constructor<T>> {
 	}
 	
 	public boolean isDefaultConstructor() {
-		return isPublic() && isUnitArgCall();
-	}
-	
-	public boolean isCsvConstructor() {
-		return parameters()
-				.allMatch(ParameterInfo::isCsvColumn);
+		return isPublic() && isNoArgCall();
 	}
 	
 	public T construct(Object...args) {

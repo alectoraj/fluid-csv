@@ -16,5 +16,8 @@ module com.fluiapi.csv {
 	
 	requires lombok;
 	requires org.apache.commons.lang3;
+	requires org.hibernate.validator;
+	requires jakarta.validation;
+	requires jakarta.el;
 	
 }

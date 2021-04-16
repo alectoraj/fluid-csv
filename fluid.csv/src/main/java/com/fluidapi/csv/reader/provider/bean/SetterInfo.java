@@ -5,12 +5,9 @@ import static com.fluidapi.csv.validaton.FailCheck.failIf;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.stream.Stream;
 
-import com.fluidapi.csv.annotations.CsvColumn;
 import com.fluidapi.csv.annotations.CsvDeserializer;
 import com.fluidapi.csv.exception.CsvException;
-import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.AutoSetter;
 import com.fluidapi.csv.reader.CsvBeanDeserializer;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
@@ -28,7 +25,7 @@ public class SetterInfo extends MethodInfo implements AutoSetter {
 	public SetterInfo(@NonNull MethodInfo methodInfo) {
 		super(methodInfo.it);
 		
-		failIf( !methodInfo.isSetter(), "method is not a setter" );
+		failIf( !methodInfo.isSetter(), "method %s is not a setter".formatted(methodInfo.it) );
 		origin = methodInfo;
 		typeOrigin = new ParameterInfo(it.getParameters()[0]); // since it's setter, it'll have exactly 1 parameter
 		
@@ -45,36 +42,8 @@ public class SetterInfo extends MethodInfo implements AutoSetter {
 	
 	// constructor helper, hence right here, not below
 	private void initialize() {
-		autoDeserializer = pick(findIndex(), findMapper());
-	}
-
-	private int findIndex() {
-		return Stream
-			.of(origin, typeOrigin())
-			.filter(t -> t.hasAnnotation(CsvColumn.class))
-			.mapToInt(AnnotatedInfo::getCsvColumnIndex)
-			.distinct()
-			.reduce((a, b) -> { throw toAmbigousIndexException(a, b); })
-			.orElseThrow(() -> new CsvFormatException("column index not specified"));
-	}
-
-	private CsvFormatException toAmbigousIndexException(int a, int b) {
-		return new CsvFormatException("ambigous column index found - %d, %d, ...".formatted(a, b));
-	}
-
-	private CsvColumnMapper<?> findMapper() {
-		CsvColumnMapper<?> custom = Stream
-				.of(origin, typeOrigin())
-				.filter(SetterInfo::hasCustomMapper)
-				.findFirst()
-				.map(SetterInfo::findCustomMapper)
-				.orElse(null);
-		
-		return custom != null ? custom : ColumnMappers.of(typeOrigin, origin);
-	}
-	
-	private AnnotatedInfo<?> typeOrigin() {
-		return (AnnotatedInfo<?>) typeOrigin;
+		CsvColumnMapper<?> autoMapper = hasCustomMapper(origin) ? findCustomMapper(origin) : null;
+		autoDeserializer = pick(origin.getCsvColumnIndex(), ColumnMappers.of(typeOrigin, origin, autoMapper));
 	}
 
 	static boolean hasCustomMapper(@NonNull AnnotatedInfo<?> property) {

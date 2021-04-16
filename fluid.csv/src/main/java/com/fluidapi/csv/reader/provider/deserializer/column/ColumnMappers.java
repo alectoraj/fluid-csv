@@ -17,7 +17,21 @@ public class ColumnMappers {
 	
 	public static CsvColumnMapper<?> of(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {
 		
-		CsvColumnMapper<String> trimming = findTrimming(origin);
+		return of(typeInfo, origin, findSupportOf(typeInfo, origin));
+	}
+	
+	public static CsvColumnMapper<?> of(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin, CsvColumnMapper<?> mapper) {
+		
+		// find preprocessor
+		CsvColumnMapper<String> preprocessor = findTrimming(origin);
+
+		// join prefix mapper with field mapper
+		return join(preprocessor, mapper != null ? mapper : findApiProvided(typeInfo, origin));
+	}
+	
+	private static CsvColumnMapper<?> findApiProvided(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {
+		
+		// find a default one
 		CsvColumnMapper<?> mapper = findSupportOf(typeInfo, origin);
 		
 		// check if anything default could be found
@@ -25,11 +39,11 @@ public class ColumnMappers {
 				"no mapper supported for %s, try using @CsvDeserialzier"
 				.formatted(typeInfo.getType()),
 				UnsupportedOperationException::new);
-
-		// join prefix mapper with field mapper
-		return join(trimming, mapper);
+		
+		// given one could be found, return it
+		return mapper;
 	}
-
+	
 	private static CsvColumnMapper<?> findSupportOf(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {
 		
 		// because we know MapSupport uses Class<?> info as key,

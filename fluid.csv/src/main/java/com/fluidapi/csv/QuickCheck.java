@@ -7,8 +7,10 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import com.fluidapi.csv.annotations.CsvColumn;
+import com.fluidapi.csv.annotations.CsvDeserializer;
 import com.fluidapi.csv.annotations.CsvFormat;
 import com.fluidapi.csv.annotations.CsvStrip;
+import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,7 +53,7 @@ public class QuickCheck {
 		return	"""
 				Zeus        Nigoi       9012   1620JAN20Olympus
 				Philips     Plodymus    5120   1842NOV7 Europe
-				Nishen      Guhoi              1921MAR1
+				Nishen      Guhoi       724    1921MAR1
 				Yamamoto    Kazon       1821            Japan
 				"""
 				.lines();
@@ -61,7 +63,7 @@ public class QuickCheck {
 	@NoArgsConstructor
 	public static class God {
 		
-		@CsvColumn(1)
+		@CsvColumn(0)
 		private String firstName;
 
 		@CsvStrip
@@ -72,6 +74,8 @@ public class QuickCheck {
 		@CsvColumn(2)
 		private int age;
 
+		private int ageMinusX;
+
 		@CsvStrip
 		@CsvColumn(3)
 		@CsvFormat("uuuuMMMd")
@@ -79,6 +83,22 @@ public class QuickCheck {
 		
 		@CsvColumn(4)
 		private String from;
+
+		@CsvStrip
+		@CsvColumn(2)
+		@CsvDeserializer(AgeDeserializer.class)
+		public void setAltAge(int age) {
+			ageMinusX = age;
+		}
+		
+	}
+	
+	public static class AgeDeserializer implements CsvColumnMapper<Integer> {
+
+		@Override
+		public Integer map(String column) {
+			return Integer.parseInt(column) - 1000;
+		}
 		
 	}
 }

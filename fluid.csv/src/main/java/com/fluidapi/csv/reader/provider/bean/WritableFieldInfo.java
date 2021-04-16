@@ -29,10 +29,8 @@ public class WritableFieldInfo extends FieldInfo implements AutoSetter {
 		failIf(!isCsvColumn(), "not a csv column field");
 		failIf(!canWrite(), "not writable");
 		
-		CsvColumnMapper<?> autoMapper = hasCustomMapper(this) ?
-				findCustomMapper(this) : ColumnMappers.of(this, this);
-		
-		autoDeserializer = pick(getCsvColumnIndex(), autoMapper);
+		CsvColumnMapper<?> autoMapper = hasCustomMapper(this) ? findCustomMapper(this) : null;
+		autoDeserializer = pick(getCsvColumnIndex(), ColumnMappers.of(this, this, autoMapper));
 	}
 	
 	@Override

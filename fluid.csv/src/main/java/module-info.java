@@ -19,5 +19,6 @@ module com.fluiapi.csv {
 	requires org.hibernate.validator;
 	requires jakarta.validation;
 	requires jakarta.el;
+	requires java.sql;
 	
 }

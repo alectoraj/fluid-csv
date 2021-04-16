@@ -9,6 +9,7 @@ import com.fluidapi.csv.annotations.CsvTrim;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.reader.provider.bean.TypeInfo;
+import com.fluidapi.csv.reader.provider.deserializer.column.datetime.MapOldTemporal;
 import com.fluidapi.csv.reader.provider.deserializer.column.number.MapNumber;
 import com.fluidapi.csv.reader.provider.deserializer.column.primitive.MapPrimitive;
 import com.fluidapi.csv.reader.provider.deserializer.column.temporal.MapTemporal;
@@ -58,7 +59,8 @@ public class ColumnMappers {
 				MapPrimitive.support,
 				MapNumber.support,
 				MapWrapper.support,
-				MapTemporal.support
+				MapTemporal.support,
+				MapOldTemporal.support
 		)
 		
 		// find the supported, use it to get the mapper and return

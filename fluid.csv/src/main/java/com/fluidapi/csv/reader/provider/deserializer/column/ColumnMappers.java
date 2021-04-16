@@ -12,6 +12,7 @@ import com.fluidapi.csv.reader.provider.bean.TypeInfo;
 import com.fluidapi.csv.reader.provider.deserializer.column.number.MapNumber;
 import com.fluidapi.csv.reader.provider.deserializer.column.primitive.MapPrimitive;
 import com.fluidapi.csv.reader.provider.deserializer.column.temporal.MapTemporal;
+import com.fluidapi.csv.reader.provider.deserializer.column.wrapper.MapWrapper;
 
 public class ColumnMappers {
 	
@@ -56,6 +57,7 @@ public class ColumnMappers {
 				MapString.support,
 				MapPrimitive.support,
 				MapNumber.support,
+				MapWrapper.support,
 				MapTemporal.support
 		)
 		

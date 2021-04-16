@@ -14,7 +14,14 @@ public abstract class MapPrimitive<T> extends MapSafe<T> {
 
 	static {
 		ClassUtils.load(
-				MapIntPrimitive.class
+				MapBytePrimitive.class,
+				MapShortPrimitive.class,
+				MapIntPrimitive.class,
+				MapLongPrimitive.class,
+				MapFloatPrimitive.class,
+				MapDoublePrimitive.class,
+				MapCharacterPrimitive.class,
+				MapBooleanPrimitive.class
 		);
 	}
 }

@@ -21,6 +21,8 @@ public abstract class MapWrapper<T> extends MapSafe<T> {
 
 	static {
 		ClassUtils.load(
+				MapBoolean.class,
+				MapCharacter.class
 		);
 	}
 }

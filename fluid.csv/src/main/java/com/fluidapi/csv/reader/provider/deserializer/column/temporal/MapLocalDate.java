@@ -3,6 +3,7 @@ package com.fluidapi.csv.reader.provider.deserializer.column.temporal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
 
 import lombok.NonNull;
@@ -14,13 +15,13 @@ public class MapLocalDate extends MapTemporal<LocalDate> {
 	}
 
 	@Override
-	protected LocalDate mapSafe(String column) {
-		return LocalDate.parse(column, formatter);
+	protected @NonNull CsvColumnMapper<LocalDate> defaultFormatter() {
+		return LocalDate::parse;
 	}
 
 	@Override
-	protected @NonNull DateTimeFormatter defaultFormat() {
-		return DateTimeFormatter.ISO_LOCAL_DATE;
+	protected @NonNull CsvColumnMapper<LocalDate> parseUsing(DateTimeFormatter formatter) {
+		return t -> LocalDate.parse(t, formatter);
 	}
 	
 	static {

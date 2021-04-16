@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class QuickCheck {
 
 	public static void main(String[] args) {
-		runCsv();
+//		runCsv();
 	}
 
 	private static void runCsv() {

@@ -14,8 +14,16 @@ public abstract class MapNumber<T extends Number> extends MapSafe<T> {
 	
 	static {
 		ClassUtils.load(
+				MapByte.class,
+				MapShort.class,
 				MapInteger.class,
-				MapBigDecimal.class
+				MapLong.class,
+				MapFloat.class,
+				MapDouble.class,
+				MapBigInteger.class,
+				MapBigDecimal.class,
+				MapAtomicInteger.class,
+				MapAtomicLong.class
 		);
 	}
 	

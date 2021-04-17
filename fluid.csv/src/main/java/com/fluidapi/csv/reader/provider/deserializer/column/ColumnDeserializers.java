@@ -16,7 +16,7 @@ import com.fluidapi.csv.reader.provider.deserializer.column.temporal.MapTemporal
 import com.fluidapi.csv.reader.provider.deserializer.column.wrapper.MapWrapper;
 import com.fluidapi.csv.utility.FunctionUtils;
 
-public class ColumnMappers {
+public class ColumnDeserializers {
 	
 	public static CsvColumnMapper<?> of(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {
 		

@@ -11,7 +11,7 @@ import com.fluidapi.csv.exception.CsvException;
 import com.fluidapi.csv.reader.AutoSetter;
 import com.fluidapi.csv.reader.CsvBeanDeserializer;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
-import com.fluidapi.csv.reader.provider.deserializer.column.ColumnMappers;
+import com.fluidapi.csv.reader.provider.deserializer.column.ColumnDeserializers;
 
 import lombok.NonNull;
 
@@ -43,7 +43,7 @@ public class SetterInfo extends MethodInfo implements AutoSetter {
 	// constructor helper, hence right here, not below
 	private void initialize() {
 		CsvColumnMapper<?> autoMapper = hasCustomMapper(origin) ? findCustomMapper(origin) : null;
-		autoDeserializer = pick(origin.getCsvColumnIndex(), ColumnMappers.of(typeOrigin, origin, autoMapper));
+		autoDeserializer = pick(origin.getCsvColumnIndex(), ColumnDeserializers.of(typeOrigin, origin, autoMapper));
 	}
 
 	static boolean hasCustomMapper(@NonNull AnnotatedInfo<?> property) {

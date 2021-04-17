@@ -11,7 +11,7 @@ import com.fluidapi.csv.exception.CsvException;
 import com.fluidapi.csv.reader.AutoSetter;
 import com.fluidapi.csv.reader.CsvBeanDeserializer;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
-import com.fluidapi.csv.reader.provider.deserializer.column.ColumnMappers;
+import com.fluidapi.csv.reader.provider.deserializer.column.ColumnDeserializers;
 
 import lombok.NonNull;
 
@@ -30,7 +30,7 @@ public class WritableFieldInfo extends FieldInfo implements AutoSetter {
 		failIf(!canWrite(), "not writable");
 		
 		CsvColumnMapper<?> autoMapper = hasCustomMapper(this) ? findCustomMapper(this) : null;
-		autoDeserializer = pick(getCsvColumnIndex(), ColumnMappers.of(this, this, autoMapper));
+		autoDeserializer = pick(getCsvColumnIndex(), ColumnDeserializers.of(this, this, autoMapper));
 	}
 	
 	@Override

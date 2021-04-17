@@ -24,5 +24,4 @@ import java.lang.annotation.Target;
 public @interface CsvTrim {
 	
 	// just annotating is assertive enough
-	
 }

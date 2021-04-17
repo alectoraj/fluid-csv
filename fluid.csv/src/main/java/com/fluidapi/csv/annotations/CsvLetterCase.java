@@ -8,6 +8,8 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.fluidapi.csv.bean.LetterCase;
+
 /**
  * Convert column to lower case before deserialization or after serialization
  * 
@@ -17,6 +19,13 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RUNTIME)
 @Target({ FIELD, METHOD })
-public @interface CsvToLowerCase {
-
+public @interface CsvLetterCase {
+	
+	/**
+	 * specify which transformation to be done
+	 * 
+	 * @return {@link LetterCase}
+	 */
+	LetterCase value();
+	
 }

@@ -11,6 +11,8 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.fluidapi.csv.bean.Strip;
+
 /**
  * Says the column should be stripped of spaces from around
  * <p>Uses {@link String#strip()}</p>
@@ -24,6 +26,9 @@ import java.lang.annotation.Target;
 @Target({ FIELD, METHOD })
 public @interface CsvStrip {
 	
-	// just annotating is assertive enough
+	/**
+	 * @return {@link Strip}, default: {@link Strip#AROUND}
+	 */
+	Strip value() default Strip.AROUND;
 	
 }

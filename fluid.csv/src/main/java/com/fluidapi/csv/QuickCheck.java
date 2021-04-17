@@ -12,14 +12,13 @@ import java.time.LocalDate;
 
 import com.fluidapi.csv.annotations.CsvColumn;
 import com.fluidapi.csv.annotations.CsvFormat;
-import com.fluidapi.csv.annotations.CsvToUpperCase;
 
 import lombok.Data;
 
 public class QuickCheck {
 
 	public static void main(String[] args) throws IOException {
-		Path testFile = Path.of("C:\\Users\\rajbi\\Downloads\\testing\\5m Sales Records.csv");
+		Path testFile = Path.of("C:\\Users\\rajbi\\Downloads\\testing\\100 Sales Records.csv");
 		
 		Instant start = Instant.now();
 		Files.lines(testFile)
@@ -37,7 +36,6 @@ public class QuickCheck {
 	@Data
 	public static class Sales {
 		
-		@CsvToUpperCase
 		@CsvColumn(0)
 		private String region;
 

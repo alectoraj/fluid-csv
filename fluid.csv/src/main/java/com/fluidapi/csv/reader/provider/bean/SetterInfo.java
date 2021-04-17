@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 
 import com.fluidapi.csv.annotations.CsvDeserializer;
 import com.fluidapi.csv.exception.CsvException;
-import com.fluidapi.csv.reader.AutoSetter;
 import com.fluidapi.csv.reader.CsvBeanDeserializer;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.deserializer.column.ColumnDeserializers;

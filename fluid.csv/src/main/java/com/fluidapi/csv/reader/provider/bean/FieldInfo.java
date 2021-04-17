@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.fluidapi.csv.exception.CsvException;
-import com.fluidapi.csv.reader.AutoSetter;
 
 import lombok.NonNull;
 

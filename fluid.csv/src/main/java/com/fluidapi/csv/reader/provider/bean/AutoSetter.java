@@ -1,4 +1,4 @@
-package com.fluidapi.csv.reader;
+package com.fluidapi.csv.reader.provider.bean;
 
 import java.util.function.BiConsumer;
 

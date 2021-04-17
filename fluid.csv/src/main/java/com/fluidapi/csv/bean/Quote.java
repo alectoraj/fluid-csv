@@ -17,6 +17,7 @@ import static com.fluidapi.csv.validaton.FailCheck.failIf;
 public record Quote(char start, char end, char escape) {
 	
 	public static final char NULL = '\0';
+	public static final char ESCAPE = '\\';
 	
 	public Quote {
 		failIf(escape == NULL, "invalid escape character");

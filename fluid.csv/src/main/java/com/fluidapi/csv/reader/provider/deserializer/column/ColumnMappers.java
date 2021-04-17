@@ -14,6 +14,7 @@ import com.fluidapi.csv.reader.provider.deserializer.column.preprocessor.MapPrep
 import com.fluidapi.csv.reader.provider.deserializer.column.primitive.MapPrimitive;
 import com.fluidapi.csv.reader.provider.deserializer.column.temporal.MapTemporal;
 import com.fluidapi.csv.reader.provider.deserializer.column.wrapper.MapWrapper;
+import com.fluidapi.csv.utility.FunctionUtils;
 
 public class ColumnMappers {
 	
@@ -28,7 +29,8 @@ public class ColumnMappers {
 		CsvColumnMapper<String> preprocessor = MapPreprocessor.findSupported(typeInfo, origin);
 
 		// join prefix mapper with field mapper
-		return join(preprocessor, mapper != null ? mapper : findApiProvided(typeInfo, origin));
+		return FunctionUtils.chain(preprocessor,
+				mapper != null ? mapper : findApiProvided(typeInfo, origin));
 	}
 	
 	private static CsvColumnMapper<?> findApiProvided(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {
@@ -72,9 +74,4 @@ public class ColumnMappers {
 		
 	}
 	
-	private static CsvColumnMapper<?> join(CsvColumnMapper<String> before, CsvColumnMapper<?> after) {
-		if( before == null ) return after;
-		if( after == null ) return before;
-		return (String column) -> after.apply(before.apply(column));
-	}
 }

@@ -15,6 +15,7 @@ import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.columndecorator.StripColumns;
 import com.fluidapi.csv.reader.provider.columndecorator.TrimColumns;
+import com.fluidapi.csv.reader.provider.columndecorator.Unescape;
 import com.fluidapi.csv.reader.provider.deserializer.AutoBeanDeserializer;
 import com.fluidapi.csv.reader.provider.deserializer.PickMapped;
 import com.fluidapi.csv.reader.provider.deserializer.column.MapString;
@@ -89,7 +90,7 @@ public class CsvReader {
 	 * @see #dequote(Quote)
 	 */
 	public static CsvLineSplitter dequote(char quoteStart, char quoteEnd) {
-		return dequote(quoteStart, quoteEnd, '\\');
+		return dequote(quoteStart, quoteEnd, Quote.ESCAPE);
 	}
 
 	/**
@@ -196,7 +197,7 @@ public class CsvReader {
 	 * @return {@link CsvColumnDecorator} as specified
 	 */
 	public static CsvColumnDecorator unescape() {
-		return null;
+		return unescape(Quote.ESCAPE);
 	}
 	
 	/**
@@ -220,7 +221,7 @@ public class CsvReader {
 	 * @return {@link CsvColumnDecorator} as specified
 	 */
 	public static CsvColumnDecorator unescape(char escapeIndicator) {
-		return null;
+		return new Unescape(escapeIndicator);
 	}
 	
 	// COLUMN TO BEAN MAPPER //

@@ -10,21 +10,28 @@ import com.fluidapi.csv.annotations.CsvTrim;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.reader.provider.bean.TypeInfo;
+import com.fluidapi.csv.utility.FunctionUtils;
 
 public class MapPreprocessor {
 	
 	public static CsvColumnMapper<String> findSupported(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {
 		
-		return of(origin)
+		CsvColumnMapper<String> decorator = of(origin)
 				.map(MapPreprocessor::toSafeDecorative)
 				.map(SafeDecorateAs::new)
 				.orElse(null);
+		
+		if( SafeUnescape.supports(origin) ) {
+			decorator = FunctionUtils.join(decorator, new SafeUnescape(origin));
+		}
+		
+		return decorator;
 	}
 
 	private static UnaryOperator<String> toSafeDecorative(AnnotatedInfo<?> origin) {
 		
 		UnaryOperator<String> safeDecorative = toTrimming(origin);
-		safeDecorative = join(safeDecorative, toCasing(origin));
+		safeDecorative = FunctionUtils.join(safeDecorative, toCasing(origin));
 		
 		return safeDecorative;
 	}
@@ -45,12 +52,6 @@ public class MapPreprocessor {
 		}
 		
 		return null;
-	}
-	
-	private static UnaryOperator<String> join(UnaryOperator<String> before, UnaryOperator<String> after) {
-		if( before == null ) return after;
-		if( after == null ) return before;
-		return (String column) -> after.apply(before.apply(column));
 	}
 	
 }

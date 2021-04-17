@@ -8,7 +8,7 @@ public class MapBoolean extends MapWrapper<Boolean> {
 	}
 	
 	static {
-		support.register(int.class, (t, u) -> new MapBoolean());
+		support.register(Boolean.class, (t, u) -> new MapBoolean());
 	}
 
 }

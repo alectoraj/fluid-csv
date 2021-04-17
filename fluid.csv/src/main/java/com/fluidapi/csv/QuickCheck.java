@@ -2,113 +2,85 @@ package com.fluidapi.csv;
 
 import static com.fluidapi.csv.reader.CsvReader.auto;
 import static com.fluidapi.csv.reader.CsvReader.delimiter;
-import static com.fluidapi.csv.reader.CsvReader.fixed;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
-import java.util.stream.Stream;
 
 import com.fluidapi.csv.annotations.CsvColumn;
 import com.fluidapi.csv.annotations.CsvFormat;
-import com.fluidapi.csv.annotations.CsvStrip;
+import com.fluidapi.csv.annotations.CsvToUpperCase;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@SuppressWarnings("unused")
 public class QuickCheck {
 
-	public static void main(String[] args) {
-//		runCsv();
-		runCsv2();
+	public static void main(String[] args) throws IOException {
+		Path testFile = Path.of("C:\\Users\\rajbi\\Downloads\\testing\\5m Sales Records.csv");
+		
+		Instant start = Instant.now();
+		Files.lines(testFile)
+			.skip(1) // header
+			.parallel()
+			.map( delimiter(",") )
+			.map( auto(Sales.class) )
+//			.min(Comparator.comparing(Sales::getOrderDate))
+			.reduce((a, b) -> b)
+			.ifPresent(System.out::println);
+		Instant end = Instant.now();
+		System.out.println(Duration.between(start, end));
 	}
 
-	private static void runCsv2() {
-		delimCsv2().map(delimiter(";"))
-		.map(auto(MonthAndYear.class))
-		.forEach(System.out::println);
-	}
-
-	private static void runCsv() {
-		fixCsv().map(fixed(12, 12, 7, 9, 10))
-//		.map(strip())
-		.map(auto(God.class))
-		.forEach(System.out::println);
-	}
-	
-	private static Stream<String> delimCsv2() {
-		return """
-				JAN;2020
-				FEBRUARY;2018
-				3;2010
-				05;2010
-				"""
-				.lines();
-	}
-
-	private static Stream<String> delimCsv() {
-		return	"""
-				Zeus;Nigoi;9012;1620JAN20;Olympus
-				Philips;Plodymus;5120;1842NOV12;Europe
-				Nishen;Guhoi;712;1921MAR1
-				Yamamoto;Kazon;1821;;Japan
-				"""
-				.lines();
-	}
-
-	private static Stream<String> quoteCsv() {
-		return	"""
-				"Zeus";"Nigoi";"9012";"1620JAN20";"Olympus"
-				"Philips";"Plodymus";"5120";"1842NOV12";"Europe"
-				"Nishen";"Guhoi";"712";"1921MAR1"
-				"Yamamoto";"Kazon";"1821";"";"Japan"
-				"""
-				.lines();
-	}
-	
-	private static Stream<String> fixCsv() {
-		return	"""
-				Zeus        Nigoi       9012   1620JAN20Olympus
-				Philips     Plodymus    5120   1842NOV7 Europe
-				Nishen      Guhoi       724    1921MAR1
-				Yamamoto    Kazon       1821            Japan
-				"""
-				.lines();
-	}
-	
 	@Data
-	@NoArgsConstructor
-	public static class God {
+	public static class Sales {
 		
+		@CsvToUpperCase
 		@CsvColumn(0)
-		private String firstName;
+		private String region;
 
-		@CsvStrip
 		@CsvColumn(1)
-		private String lastName;
-		
-		@CsvStrip
+		private String country;
+
 		@CsvColumn(2)
-		private int age;
+		private String itemType;
 
-		@CsvStrip
 		@CsvColumn(3)
-		@CsvFormat("uuuuMMMd")
-		private LocalDate joined;
-		
+		private String salesChannel;
+
 		@CsvColumn(4)
-		private String from;
+		private Character orderPriority;
+
+		@CsvColumn(5)
+		@CsvFormat("M/d/uuuu")
+		private LocalDate orderDate;
+
+		@CsvColumn(6)
+		private Integer orderID;
+
+		@CsvColumn(7)
+		@CsvFormat("M/d/uuuu")
+		private LocalDate shipDate;
+
+		@CsvColumn(8)
+		private Integer unitsSold;
+
+		@CsvColumn(9)
+		private Double unitPrice;
+
+		@CsvColumn(10)
+		private Double unitCost;
+
+		@CsvColumn(11)
+		private Double totalRevenue;
+
+		@CsvColumn(12)
+		private Double totalCost;
+
+		@CsvColumn(13)
+		private Double totalProfit;
 		
-	}
-	
-	@Data
-	public static class MonthAndYear {
-		
-		@CsvColumn(0)
-		private Month month;
-		
-		@CsvColumn(1)
-		private Year year;
 	}
 }

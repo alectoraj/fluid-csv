@@ -4,14 +4,13 @@ import static com.fluidapi.csv.validaton.FailCheck.failIf;
 
 import java.util.stream.Stream;
 
-import com.fluidapi.csv.annotations.CsvStrip;
-import com.fluidapi.csv.annotations.CsvTrim;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.reader.provider.bean.TypeInfo;
 import com.fluidapi.csv.reader.provider.deserializer.column.datetime.MapOldTemporal;
 import com.fluidapi.csv.reader.provider.deserializer.column.enums.MapEnum;
 import com.fluidapi.csv.reader.provider.deserializer.column.number.MapNumber;
+import com.fluidapi.csv.reader.provider.deserializer.column.preprocessor.MapPreprocessor;
 import com.fluidapi.csv.reader.provider.deserializer.column.primitive.MapPrimitive;
 import com.fluidapi.csv.reader.provider.deserializer.column.temporal.MapTemporal;
 import com.fluidapi.csv.reader.provider.deserializer.column.wrapper.MapWrapper;
@@ -26,7 +25,7 @@ public class ColumnMappers {
 	public static CsvColumnMapper<?> of(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin, CsvColumnMapper<?> mapper) {
 		
 		// find preprocessor
-		CsvColumnMapper<String> preprocessor = findTrimming(origin);
+		CsvColumnMapper<String> preprocessor = MapPreprocessor.findSupported(typeInfo, origin);
 
 		// join prefix mapper with field mapper
 		return join(preprocessor, mapper != null ? mapper : findApiProvided(typeInfo, origin));
@@ -71,12 +70,6 @@ public class ColumnMappers {
 		.findFirst()
 		.orElse(null);
 		
-	}
-
-	private static CsvColumnMapper<String> findTrimming(AnnotatedInfo<?> origin) {
-		if( origin.hasAnnotation(CsvStrip.class) ) return new MapStringStripped();
-		if( origin.hasAnnotation(CsvTrim.class) ) return new MapStringTrimmed();
-		return null;
 	}
 	
 	private static CsvColumnMapper<?> join(CsvColumnMapper<String> before, CsvColumnMapper<?> after) {

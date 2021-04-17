@@ -1,8 +1,12 @@
 package com.fluidapi.csv.reader.provider.deserializer;
 
+import static com.fluidapi.csv.bean.ValidateDuring.ALWAYS;
+import static com.fluidapi.csv.bean.ValidateDuring.DESERIALIZATION;
+
 import java.time.Year;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -12,6 +16,7 @@ import com.fluidapi.csv.annotations.CsvColumn;
 import com.fluidapi.csv.annotations.CsvDeserializer;
 import com.fluidapi.csv.annotations.CsvStrip;
 import com.fluidapi.csv.annotations.CsvTrim;
+import com.fluidapi.csv.annotations.CsvValidate;
 import com.fluidapi.csv.exception.CsvException;
 import com.fluidapi.csv.reader.AutoSetter;
 import com.fluidapi.csv.reader.CsvBeanDeserializer;
@@ -21,6 +26,8 @@ import com.fluidapi.csv.reader.provider.bean.CsvClassInfo;
 import com.fluidapi.csv.reader.provider.bean.FieldInfo;
 import com.fluidapi.csv.reader.provider.bean.SetterInfo;
 import com.fluidapi.csv.validaton.BeanValidation;
+
+import jakarta.validation.Valid;
 
 /**
  * Automatically maps all fields as configured. here's a few rules one need to
@@ -74,6 +81,7 @@ public class AutoBeanDeserializer<T> implements CsvBeanDeserializer<T> {
 
 	private final Supplier<T> constructor;
 	private final BiConsumer<T, String[]> populate;
+	private final Consumer<T> validator;
 	
 	public AutoBeanDeserializer(Class<T> type) {
 		// try setting type as accessible
@@ -81,10 +89,13 @@ public class AutoBeanDeserializer<T> implements CsvBeanDeserializer<T> {
 		// find setters, try setting them as accessible
 		// if proper has no accessible setter, try using assignment
 		
-		constructor = new BeanConstructor<>(type);
-		populate = new BeanFieldUpdater<>(type);
+		CsvClassInfo<T> classInfo = new CsvClassInfo<>(type);
+		constructor = new BeanConstructor<>(classInfo);
+		populate = new BeanFieldUpdater<>(classInfo);
+		
+		validator = toValidator(classInfo);
 	}
-	
+
 	@Override
 	public T convert(String[] columns) {
 		
@@ -92,19 +103,33 @@ public class AutoBeanDeserializer<T> implements CsvBeanDeserializer<T> {
 		T instance = constructor.get();
 		populate.accept(instance, columns);
 		
-		// validate bean
-		BeanValidation.validate(instance);
+		// validate bean, if configured
+		validator.accept(instance);
 		
 		// return populated & validated bean
 		return instance;
+	}
+
+	private Consumer<T> toValidator(CsvClassInfo<T> classInfo) {
+		
+		// if @Valid is added
+		return classInfo.hasAnnotation(Valid.class)
+		
+		// or @CsvValidate with DESERIALIZATION or ALWAYS
+			|| (classInfo.hasAnnotation(CsvValidate.class)
+				&& classInfo.findAnnotation(CsvValidate.class).value()
+					.isOneOf(ALWAYS, DESERIALIZATION))
+			
+		// then result a validator, or keep it no-op
+			? BeanValidation::validate : t -> {};
 	}
 	
 	static class BeanConstructor<T> implements Supplier<T> {
 		
 		private final ConstructorInfo<T> constructor;
 		
-		public BeanConstructor(Class<T> type) {
-			constructor = new CsvClassInfo<>(type)
+		public BeanConstructor(CsvClassInfo<T> classInfo) {
+			constructor = classInfo
 					.defaultConstructor()
 					.orElseThrow(() -> new CsvException("no suitable accessible constructor found"));
 		}
@@ -125,8 +150,7 @@ public class AutoBeanDeserializer<T> implements CsvBeanDeserializer<T> {
 		
 		private final List<AutoSetter> setters;
 		
-		public BeanFieldUpdater(Class<T> type) {
-			CsvClassInfo<T> classInfo = new CsvClassInfo<>(type);
+		public BeanFieldUpdater(CsvClassInfo<T> classInfo) {
 			setters = findSetters(classInfo).toList();
 		}
 

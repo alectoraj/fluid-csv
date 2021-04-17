@@ -1,36 +1,32 @@
 package com.fluidapi.csv;
 
-import static com.fluidapi.csv.reader.CsvReader.auto;
-import static com.fluidapi.csv.reader.CsvReader.delimiter;
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 
 import com.fluidapi.csv.annotations.CsvColumn;
 import com.fluidapi.csv.annotations.CsvFormat;
+import com.fluidapi.csv.utility.StringUtils;
 
 import lombok.Data;
 
 public class QuickCheck {
 
 	public static void main(String[] args) throws IOException {
-		Path testFile = Path.of("C:\\Users\\rajbi\\Downloads\\testing\\100 Sales Records.csv");
+//		Path testFile = Path.of("C:\\Users\\rajbi\\Downloads\\testing\\5m Sales Records.csv");
+//
+//		Instant start = Instant.now();
+//		Files.lines(testFile)
+//			.skip(1) // header
+//			.parallel()
+//			.map( delimiter(",") )
+//			.map( auto(Sales.class) )
+////			.min(Comparator.comparing(Sales::getOrderDate))
+//			.reduce((a, b) -> b)
+//			.ifPresent(System.out::println);
+//		Instant end = Instant.now();
+//		System.out.println(Duration.between(start, end));
 		
-		Instant start = Instant.now();
-		Files.lines(testFile)
-			.skip(1) // header
-			.parallel()
-			.map( delimiter(",") )
-			.map( auto(Sales.class) )
-//			.min(Comparator.comparing(Sales::getOrderDate))
-			.reduce((a, b) -> b)
-			.ifPresent(System.out::println);
-		Instant end = Instant.now();
-		System.out.println(Duration.between(start, end));
+		System.out.println(StringUtils.toTitleCase("dorMon d'Souza"));
 	}
 
 	@Data

@@ -1,5 +1,12 @@
 package com.fluidapi.csv.writer;
 
+import com.fluidapi.csv.bean.Quote;
+import com.fluidapi.csv.reader.provider.deserializer.PickString;
+import com.fluidapi.csv.writer.provider.decorator.Escape;
+import com.fluidapi.csv.writer.provider.decorator.WrapQuotes;
+import com.fluidapi.csv.writer.provider.linejoiner.JoinByDelimiter;
+import com.fluidapi.csv.writer.provider.linejoiner.JoinFixedLength;
+
 /**
  * Provides shorthand methods to all sorts of functionalities that this utility
  * provides related to writing a csv
@@ -19,7 +26,7 @@ public class CsvWriter {
 	 * @return {@link CsvColumnJoiner} as specified
 	 */
 	public static CsvColumnJoiner delimiter(String delimiter) {
-		return null;
+		return new JoinByDelimiter(delimiter);
 	}
 	
 	/**
@@ -27,13 +34,13 @@ public class CsvWriter {
 	 * fixed said length. This will also cut off a value to fit within the said
 	 * column length
 	 * 
-	 * @param lengths zero or positive valued character lengths to specify per
-	 *                column width. zero lengths can be utilized to adjust column
-	 *                index in configuration, although discouraged from using
+	 * @param widths zero or positive valued character lengths to specify per column
+	 *               width. zero lengths can be utilized to adjust column index in
+	 *               configuration, although discouraged from using
 	 * @return {@link CsvColumnJoiner} as specified
 	 */
-	public static CsvColumnJoiner fixed(int...lengths) {
-		return null;
+	public static CsvColumnJoiner fixed(int...widths) {
+		return new JoinFixedLength(widths);
 	}
 	
 	/**
@@ -44,30 +51,50 @@ public class CsvWriter {
 	 * @return {@link CsvColumnJoiner} as specified
 	 */
 	public static CsvColumnJoiner only(int index) {
-		return null;
+		return new PickString(index);
 	}
 	
 	// COLUMN DECORATOR //
 
 	/**
-	 * Encloses every column with given quote
+	 * Encloses every column with given quote.
 	 * 
-	 * @param quote enclose every column with it, preferably plain text
+	 * <h3 style="color: #ea3212">CAUTION</h3>
+	 * <P>
+	 * For performance & logical reasons, this decorator does not escape anything,
+	 * even the quote marks. it assumes they're either already escaped, or there can
+	 * be no character that needs escaping.
+	 * </P>
+	 * <p>
+	 * if escaping is required, refer {@link Escape}
+	 * </p>
+	 * 
+	 * @param quote enclose every column with it, preferably simple characters
 	 * @return {@link CsvColumnDecorator} as specified
 	 */
-	public static CsvColumnDecorator enclose(String quote) {
-		return null;
+	public static CsvColumnDecorator enclose(char quote) {
+		return enclose(quote, quote);
 	}
 	
 	/**
-	 * Encloses every column with given quote
+	 * Encloses every column with given quote.
 	 * 
-	 * @param startQuote start of quotation, preferably plain text
-	 * @param endQuote end of quotation, preferably plain text
+	 * <h3 style="color: #ea3212">CAUTION</h3>
+	 * <P>
+	 * For performance & logical reasons, this decorator does not escape anything,
+	 * even the quote marks. it assumes they're either already escaped, or there can
+	 * be no character that needs escaping.
+	 * </P>
+	 * <p>
+	 * if escaping is required, refer {@link Escape}
+	 * </p>
+	 * 
+	 * @param startQuote start of quotation, preferably simple characters
+	 * @param endQuote   end of quotation, preferably simple characters
 	 * @return {@link CsvColumnDecorator} as specified
 	 */
-	public static CsvColumnDecorator enclose(String startQuote, String endQuote) {
-		return null;
+	public static CsvColumnDecorator enclose(char startQuote, char endQuote) {
+		return new WrapQuotes(startQuote, endQuote);
 	}
 	
 	/**
@@ -78,8 +105,8 @@ public class CsvWriter {
 	 * @return {@link CsvColumnDecorator} as specified
 	 * @see #escape(char, char...)
 	 */
-	public static CsvColumnDecorator escape(char...characters) {
-		return null;
+	public static CsvColumnDecorator escapeStandard(char...characters) {
+		return escape(Quote.ESCAPE, characters);
 	}
 	
 	/**
@@ -92,7 +119,7 @@ public class CsvWriter {
 	 * @see #escape(char...)
 	 */
 	public static CsvColumnDecorator escape(char escapeWith, char...characters) {
-		return null;
+		return new Escape(escapeWith, characters);
 	}
 	
 	// BEAN TO COLUMN MAPPER //

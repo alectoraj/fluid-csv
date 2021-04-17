@@ -18,7 +18,7 @@ import com.fluidapi.csv.reader.provider.columndecorator.TrimColumns;
 import com.fluidapi.csv.reader.provider.columndecorator.Unescape;
 import com.fluidapi.csv.reader.provider.deserializer.AutoBeanDeserializer;
 import com.fluidapi.csv.reader.provider.deserializer.PickMapped;
-import com.fluidapi.csv.reader.provider.deserializer.column.MapString;
+import com.fluidapi.csv.reader.provider.deserializer.PickString;
 import com.fluidapi.csv.reader.provider.deserializer.column.number.MapBigDecimal;
 import com.fluidapi.csv.reader.provider.deserializer.column.number.MapInteger;
 import com.fluidapi.csv.reader.provider.linesplitter.NoSplit;
@@ -270,7 +270,7 @@ public class CsvReader {
 	 * @return {@link CsvBeanDeserializer} as specified
 	 */
 	public static CsvBeanDeserializer<String> string(int index) {
-		return pick(index, new MapString());
+		return new PickString(index);
 	}
 
 	/**

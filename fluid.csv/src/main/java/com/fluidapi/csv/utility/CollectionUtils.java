@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.lang3.ArrayUtils.isEmpty;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.IntPredicate;
@@ -49,6 +50,15 @@ public interface CollectionUtils {
 	@SafeVarargs
 	static <E> Set<E> asSet(E...elements) {
 		return stream(elements).collect(toSet());
+	}
+	
+	static Set<Character> asSet(char...characters) {
+		Set<Character> set = new HashSet<>(characters.length, 1f);
+		for (char character : characters) {
+			set.add(character);
+		}
+		
+		return set;
 	}
 	
 }

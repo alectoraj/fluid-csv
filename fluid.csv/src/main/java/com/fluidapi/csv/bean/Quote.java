@@ -25,4 +25,8 @@ public record Quote(char start, char end, char escape) {
 		failIf(end == escape, "escape character must be different than quotes");
 	}
 	
+	public boolean isUniQuote() {
+		return start == end;
+	}
+	
 }

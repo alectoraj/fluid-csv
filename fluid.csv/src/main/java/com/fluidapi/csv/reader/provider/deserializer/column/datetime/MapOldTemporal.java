@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.fluidapi.csv.annotations.CsvFormat;
 import com.fluidapi.csv.annotations.CsvTemporal;
 import com.fluidapi.csv.exception.CsvFormatException;
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.reader.provider.deserializer.column.MapSafe;
 import com.fluidapi.csv.utility.ClassUtils;
 import com.fluidapi.csv.utility.MapSupport;

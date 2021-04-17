@@ -3,8 +3,8 @@ package com.fluidapi.csv.reader.provider.deserializer.column.temporal;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
 
 import lombok.NonNull;
 

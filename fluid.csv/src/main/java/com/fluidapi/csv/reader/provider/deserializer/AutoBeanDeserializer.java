@@ -18,13 +18,13 @@ import com.fluidapi.csv.annotations.CsvStrip;
 import com.fluidapi.csv.annotations.CsvTrim;
 import com.fluidapi.csv.annotations.CsvValidate;
 import com.fluidapi.csv.exception.CsvException;
+import com.fluidapi.csv.provider.bean.AutoSetter;
+import com.fluidapi.csv.provider.bean.ConstructorInfo;
+import com.fluidapi.csv.provider.bean.CsvClassInfo;
+import com.fluidapi.csv.provider.bean.FieldInfo;
+import com.fluidapi.csv.provider.bean.SetterInfo;
 import com.fluidapi.csv.reader.CsvBeanDeserializer;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
-import com.fluidapi.csv.reader.provider.bean.AutoSetter;
-import com.fluidapi.csv.reader.provider.bean.ConstructorInfo;
-import com.fluidapi.csv.reader.provider.bean.CsvClassInfo;
-import com.fluidapi.csv.reader.provider.bean.FieldInfo;
-import com.fluidapi.csv.reader.provider.bean.SetterInfo;
 import com.fluidapi.csv.validaton.BeanValidation;
 
 import jakarta.validation.Valid;

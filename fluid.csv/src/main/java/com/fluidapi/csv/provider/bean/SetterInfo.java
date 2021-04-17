@@ -1,4 +1,4 @@
-package com.fluidapi.csv.reader.provider.bean;
+package com.fluidapi.csv.provider.bean;
 
 import static com.fluidapi.csv.reader.CsvReader.pick;
 import static com.fluidapi.csv.validaton.FailCheck.failIf;

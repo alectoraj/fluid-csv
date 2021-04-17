@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.fluidapi.csv.function.MapConstructor;
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
-import com.fluidapi.csv.reader.provider.bean.TypeInfo;
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.TypeInfo;
 
 public class MapSupport<T> {
 	

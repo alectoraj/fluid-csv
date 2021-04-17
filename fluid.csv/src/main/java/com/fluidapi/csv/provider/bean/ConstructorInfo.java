@@ -1,4 +1,4 @@
-package com.fluidapi.csv.reader.provider.bean;
+package com.fluidapi.csv.provider.bean;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,8 +1,8 @@
-package com.fluidapi.csv.reader.provider.bean;
+package com.fluidapi.csv.provider.bean;
 
+import static com.fluidapi.csv.provider.bean.SetterInfo.findCustomMapper;
+import static com.fluidapi.csv.provider.bean.SetterInfo.hasCustomMapper;
 import static com.fluidapi.csv.reader.CsvReader.pick;
-import static com.fluidapi.csv.reader.provider.bean.SetterInfo.findCustomMapper;
-import static com.fluidapi.csv.reader.provider.bean.SetterInfo.hasCustomMapper;
 import static com.fluidapi.csv.validaton.FailCheck.failIf;
 
 import java.lang.reflect.Field;

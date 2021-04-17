@@ -1,7 +1,7 @@
 package com.fluidapi.csv.reader.provider.deserializer.column.preprocessor;
 
 import com.fluidapi.csv.annotations.CsvUnescape;
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.reader.provider.deserializer.column.MapSafe;
 
 import lombok.RequiredArgsConstructor;

@@ -4,9 +4,9 @@ import static com.fluidapi.csv.validaton.FailCheck.failIf;
 
 import java.util.stream.Stream;
 
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.TypeInfo;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
-import com.fluidapi.csv.reader.provider.bean.TypeInfo;
 import com.fluidapi.csv.reader.provider.deserializer.column.datetime.MapOldTemporal;
 import com.fluidapi.csv.reader.provider.deserializer.column.enums.MapEnum;
 import com.fluidapi.csv.reader.provider.deserializer.column.number.MapNumber;

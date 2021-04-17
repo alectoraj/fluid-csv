@@ -3,7 +3,7 @@ package com.fluidapi.csv.reader.provider.deserializer.column.datetime;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
 
 import lombok.NonNull;
 

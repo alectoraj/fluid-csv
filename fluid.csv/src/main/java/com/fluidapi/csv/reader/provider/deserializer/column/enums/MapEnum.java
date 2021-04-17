@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 import com.fluidapi.csv.function.MapConstructor;
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
-import com.fluidapi.csv.reader.provider.bean.TypeInfo;
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.TypeInfo;
 import com.fluidapi.csv.reader.provider.deserializer.column.MapSafe;
 import com.fluidapi.csv.utility.ClassUtils;
 import com.fluidapi.csv.utility.MapSupport;

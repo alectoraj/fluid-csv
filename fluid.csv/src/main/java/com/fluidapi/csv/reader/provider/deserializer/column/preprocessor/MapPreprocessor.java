@@ -7,9 +7,9 @@ import java.util.function.UnaryOperator;
 import com.fluidapi.csv.annotations.CsvLetterCase;
 import com.fluidapi.csv.annotations.CsvStrip;
 import com.fluidapi.csv.annotations.CsvTrim;
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.TypeInfo;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
-import com.fluidapi.csv.reader.provider.bean.TypeInfo;
 import com.fluidapi.csv.utility.FunctionUtils;
 
 public class MapPreprocessor {

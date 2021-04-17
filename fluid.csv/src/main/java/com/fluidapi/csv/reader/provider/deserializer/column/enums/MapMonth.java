@@ -4,8 +4,8 @@ import static java.util.Arrays.stream;
 
 import java.time.Month;
 
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
-import com.fluidapi.csv.reader.provider.bean.TypeInfo;
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.TypeInfo;
 
 public class MapMonth extends MapEnum {
 

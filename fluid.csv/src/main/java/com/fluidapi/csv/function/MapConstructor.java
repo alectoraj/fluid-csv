@@ -2,8 +2,8 @@ package com.fluidapi.csv.function;
 
 import java.util.function.BiFunction;
 
-import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
-import com.fluidapi.csv.reader.provider.bean.TypeInfo;
+import com.fluidapi.csv.provider.bean.AnnotatedInfo;
+import com.fluidapi.csv.provider.bean.TypeInfo;
 
 @FunctionalInterface
 public interface MapConstructor<T> extends BiFunction<TypeInfo<?>, AnnotatedInfo<?>, T> {

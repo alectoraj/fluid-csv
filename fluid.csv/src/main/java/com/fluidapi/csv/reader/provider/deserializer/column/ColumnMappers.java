@@ -10,6 +10,7 @@ import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.reader.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.reader.provider.bean.TypeInfo;
 import com.fluidapi.csv.reader.provider.deserializer.column.datetime.MapOldTemporal;
+import com.fluidapi.csv.reader.provider.deserializer.column.enums.MapEnum;
 import com.fluidapi.csv.reader.provider.deserializer.column.number.MapNumber;
 import com.fluidapi.csv.reader.provider.deserializer.column.primitive.MapPrimitive;
 import com.fluidapi.csv.reader.provider.deserializer.column.temporal.MapTemporal;

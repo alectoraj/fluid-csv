@@ -1,6 +1,6 @@
 package com.fluidapi.csv.bean;
 
-public enum TemporalTypes {
+public enum TemporalType {
 
 	DATE,
 	TIME,

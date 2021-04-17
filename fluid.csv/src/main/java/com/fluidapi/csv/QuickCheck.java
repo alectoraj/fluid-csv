@@ -39,8 +39,10 @@ public class QuickCheck {
 	
 	private static Stream<String> delimCsv2() {
 		return """
-				JANUARY;2020
+				JAN;2020
 				FEBRUARY;2018
+				3;2010
+				05;2010
 				"""
 				.lines();
 	}

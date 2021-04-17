@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.fluidapi.csv.bean.TemporalTypes;
+import com.fluidapi.csv.bean.TemporalType;
 
 /**
  * For {@link Date}, its {@code java.sql} sub-classes and {@link Calendar}, if
@@ -21,7 +21,7 @@ import com.fluidapi.csv.bean.TemporalTypes;
  * temporal type.
  * 
  * <p>
- * default: {@link TemporalTypes#TIMESTAMP}
+ * default: {@link TemporalType#TIMESTAMP}
  * </p>
  * 
  * <p>
@@ -40,8 +40,8 @@ public @interface CsvTemporal {
 	/**
 	 * Specifies the temporal type of the column
 	 * 
-	 * @return {@link TemporalTypes} of the field
+	 * @return {@link TemporalType} of the field
 	 */
-	TemporalTypes value();
+	TemporalType value();
 
 }

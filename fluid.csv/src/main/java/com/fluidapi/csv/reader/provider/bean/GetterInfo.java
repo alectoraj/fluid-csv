@@ -10,6 +10,7 @@ import com.fluidapi.csv.exception.CsvException;
 
 import lombok.NonNull;
 
+// TODO change things into get operation
 public class GetterInfo extends MethodInfo {
 	
 	protected AnnotatedInfo<? extends Member> origin;

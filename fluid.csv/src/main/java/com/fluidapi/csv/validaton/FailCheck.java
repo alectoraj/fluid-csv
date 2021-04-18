@@ -7,7 +7,7 @@ import java.util.function.Supplier;
  * defines quick validation methods.
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 public interface FailCheck {
 

@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * specifying which column does it represent
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 @Documented
 @Retention(RUNTIME)

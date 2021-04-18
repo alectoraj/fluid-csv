@@ -7,7 +7,7 @@ import com.fluidapi.csv.utility.MapSupport;
 
 /**
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  * @param <T> wrapper types, except sub class of {@link Number}, they're
  *            supported by {@link MapNumber}
  */

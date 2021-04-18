@@ -9,7 +9,7 @@ import java.util.function.ToIntFunction;
  * </p>
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 @FunctionalInterface
 public interface CharIndexFinder extends ToIntFunction<Character> {

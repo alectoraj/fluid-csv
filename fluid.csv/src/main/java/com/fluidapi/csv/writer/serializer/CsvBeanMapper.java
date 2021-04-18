@@ -8,17 +8,11 @@ import java.util.function.Function;
  * {@link String} value
  * 
  * @author Arindam Biswas
- * @since 2.0
+ * @since 0.2
  *
  * @param <T> any bean type
  */
+@FunctionalInterface
 public interface CsvBeanMapper<T> extends Function<T, String> {
-	
-	String map(T t);
-	
-	@Override
-	default String apply(T t) {
-		return map(t);
-	}
-	
+	// abstract method: apply
 }

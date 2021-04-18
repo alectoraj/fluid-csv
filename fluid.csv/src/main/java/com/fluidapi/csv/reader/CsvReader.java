@@ -31,7 +31,7 @@ import com.fluidapi.csv.reader.provider.linesplitter.SplitQuoted;
  * provides related to reading a csv.
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 public class CsvReader {
 	

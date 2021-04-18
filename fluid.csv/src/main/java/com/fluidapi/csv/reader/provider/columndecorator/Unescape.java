@@ -8,7 +8,7 @@ import com.fluidapi.csv.reader.provider.deserializer.column.preprocessor.SafeUne
  * Removes escape indicators
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  * @see CsvReader#unescape()
  * @see CsvReader#unescape(char)
  * @see SafeUnescape

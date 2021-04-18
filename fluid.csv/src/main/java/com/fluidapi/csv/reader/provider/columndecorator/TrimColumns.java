@@ -6,7 +6,7 @@ import com.fluidapi.csv.reader.CsvColumnDecorator;
  * Removes white spaces from around a column using {@link String#trim()}
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  * @see StripColumns
  */
 public class TrimColumns extends SafeColumnDecorator implements CsvColumnDecorator {

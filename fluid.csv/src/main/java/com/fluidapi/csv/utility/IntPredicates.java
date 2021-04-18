@@ -6,7 +6,7 @@ import java.util.function.IntPredicate;
  * Provides {@link IntPredicate} implementation shorthands.
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 public interface IntPredicates {
 

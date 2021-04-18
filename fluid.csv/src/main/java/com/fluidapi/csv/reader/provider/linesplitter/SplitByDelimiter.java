@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
  * Splits a line using the given delimiter pattern
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  * 
  * @see CsvReader#delimiter(Pattern)
  * @see CsvReader#delimiter(String)

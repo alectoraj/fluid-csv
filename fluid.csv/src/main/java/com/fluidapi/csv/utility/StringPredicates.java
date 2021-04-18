@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  * Provides {@link Predicate Predicate<String>} implementation shorthands.
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 public interface StringPredicates {
 

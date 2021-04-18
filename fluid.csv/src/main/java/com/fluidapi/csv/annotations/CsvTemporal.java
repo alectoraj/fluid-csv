@@ -30,7 +30,7 @@ import com.fluidapi.csv.bean.TemporalType;
  * </p>
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 @Documented
 @Retention(RUNTIME)
@@ -42,6 +42,6 @@ public @interface CsvTemporal {
 	 * 
 	 * @return {@link TemporalType} of the field
 	 */
-	TemporalType value();
+	TemporalType value() default TemporalType.TIMESTAMP;
 
 }

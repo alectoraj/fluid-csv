@@ -6,7 +6,7 @@ import java.util.function.Function;
  * Reads a bean and maps it to a set of columns as {@code String[]}
  * 
  * @author Arindam Biswas
- * @since 2.0
+ * @since 0.2
  */
 @FunctionalInterface
 public interface CsvBeanSerializer<T> extends Function<T, String[]> {

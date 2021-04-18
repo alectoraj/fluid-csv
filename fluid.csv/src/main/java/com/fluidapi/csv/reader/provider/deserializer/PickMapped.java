@@ -19,7 +19,7 @@ import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
  * </ul>
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  * 
  * @param <T> any object type
  */

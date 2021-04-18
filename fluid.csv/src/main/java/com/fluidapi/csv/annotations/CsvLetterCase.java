@@ -14,7 +14,7 @@ import com.fluidapi.csv.bean.LetterCase;
  * Convert column to lower case before deserialization or after serialization
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 @Documented
 @Retention(RUNTIME)

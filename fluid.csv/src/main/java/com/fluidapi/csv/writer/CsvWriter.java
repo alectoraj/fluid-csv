@@ -6,13 +6,14 @@ import com.fluidapi.csv.writer.provider.decorator.Escape;
 import com.fluidapi.csv.writer.provider.decorator.WrapQuotes;
 import com.fluidapi.csv.writer.provider.linejoiner.JoinByDelimiter;
 import com.fluidapi.csv.writer.provider.linejoiner.JoinFixedLength;
+import com.fluidapi.csv.writer.provider.serializer.AutoBeanSerializer;
 
 /**
  * Provides shorthand methods to all sorts of functionalities that this utility
  * provides related to writing a csv
  * 
  * @author Arindam Biswas
- * @since 2.0
+ * @since 0.2
  */
 public class CsvWriter {
 	
@@ -133,7 +134,7 @@ public class CsvWriter {
 	 * @return {@link CsvBeanSerializer} as specified
 	 */
 	public static <T> CsvBeanSerializer<T> auto(Class<T> type) {
-		return null;
+		return new AutoBeanSerializer<>(type);
 	}
 	
 }

@@ -40,7 +40,7 @@ public class FieldInfo extends MemberInfo<Field> implements TypeInfo<Field> {
 			return setter.get();
 		}
 		
-		failIf(canWrite(), "field is not writable, and no accessible setter found", CsvException::new);
+		failIf(!canWrite(), "field is not writable, and no accessible setter found", CsvException::new);
 		return new WritableFieldInfo(this);
 	}
 
@@ -52,11 +52,25 @@ public class FieldInfo extends MemberInfo<Field> implements TypeInfo<Field> {
 				.filter(Objects::nonNull)
 				.map(setter -> new SetterInfo(this, setter));
 	}
+	
+	public AutoGetter getGetter() {
+		Optional<GetterInfo> getter = findGetter();
+		
+		if( getter.isPresent() ) {
+			return getter.get();
+		}
+		
+		failIf(!canAccess(), "field is not readable, and no accessible getter found", CsvException::new);
+		return new ReadableFieldInfo(this);
+	}
 
 	/**
 	 * @return finds the getter method using standard naming scheme
 	 */
 	public Optional<GetterInfo> findGetter() {
+		// instead of ternary here, we're first finding a getter with is prefix for boolean
+		// and if not found, then we're looking for a getter with get prefix
+		// this will allow us to pick getters with get prefix even for boolean types
 		return findGetterWithIsIfEligible().or(this::findGetterWithGet);
 	}
 

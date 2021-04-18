@@ -20,7 +20,7 @@ import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
  * </p>
  * 
  * @author Arindam Biswas
- * @since 2.0
+ * @since 0.2
  */
 @Documented
 @Retention(RUNTIME)

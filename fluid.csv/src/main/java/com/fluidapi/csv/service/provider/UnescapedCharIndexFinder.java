@@ -13,7 +13,7 @@ import com.fluidapi.csv.service.Cleanable;
  * and would not be treated as a eureka moment.
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 public final class UnescapedCharIndexFinder implements CharIndexFinder, Cleanable {
 	

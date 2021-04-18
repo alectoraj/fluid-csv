@@ -6,7 +6,7 @@ import java.util.function.Function;
  * Takes in a set of columns as {@code String[]} and joins them to form a line in Csv file
  * 
  * @author Arindam Biswas
- * @since 2.0
+ * @since 0.2
  */
 @FunctionalInterface
 public interface CsvColumnJoiner extends Function<String[], String> {

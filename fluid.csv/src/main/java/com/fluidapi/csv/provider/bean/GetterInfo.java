@@ -6,16 +6,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import com.fluidapi.csv.exception.CsvException;
+import com.fluidapi.csv.writer.provider.serializer.column.ColumnSerializers;
+import com.fluidapi.csv.writer.serializer.CsvBeanMapper;
 
 import lombok.NonNull;
 
-// TODO change things into get operation
 public class GetterInfo extends MethodInfo implements AutoGetter {
 
 	final MemberInfo<?> origin;
 	final TypeInfo<?> typeOrigin;
 	
-	// TODO initialize mapper
+	CsvBeanMapper<Object> autoMapper;
 	
 	public GetterInfo(@NonNull MethodInfo method) {
 		super(method.it);
@@ -23,12 +24,21 @@ public class GetterInfo extends MethodInfo implements AutoGetter {
 		failIf( !method.isGetter(), "method is not a getter" );
 		origin = method;
 		typeOrigin = new ClassInfo<>(method.returnType());
+		
+		initialize();
 	}
 
 	GetterInfo(@NonNull FieldInfo field, @NonNull Method getter) {
 		super(getter);
+		
 		origin = field;
 		typeOrigin = field;
+		
+		initialize();
+	}
+	
+	private void initialize() {
+		autoMapper = ColumnSerializers.of(typeOrigin, origin);
 	}
 
 	@Override
@@ -47,8 +57,7 @@ public class GetterInfo extends MethodInfo implements AutoGetter {
 
 	@Override
 	public String autoGet(Object instance) {
-		// TODO map to string by type & format
-		return String.valueOf(instance);
+		return autoMapper.apply(get(instance));
 	}
 
 }

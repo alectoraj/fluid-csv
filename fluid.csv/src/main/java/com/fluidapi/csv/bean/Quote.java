@@ -12,7 +12,7 @@ import static com.fluidapi.csv.validaton.FailCheck.failIf;
  * </ol>
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 public record Quote(char start, char end, char escape) {
 	

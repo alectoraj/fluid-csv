@@ -19,7 +19,7 @@ import com.fluidapi.csv.bean.Strip;
  * <p>Takes precedence over {@link CsvTrim}</p>
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 @Documented
 @Retention(RUNTIME)

@@ -7,7 +7,7 @@ import com.fluidapi.csv.reader.CsvReader;
  * Reads the whole line as a single column.
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  * 
  * @see CsvReader#line()
  */

@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * remove the escape characters to convert "Zeno D\'Souza" to "Zeno D'Souza"
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 @Documented
 @Retention(RUNTIME)

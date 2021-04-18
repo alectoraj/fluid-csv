@@ -17,7 +17,7 @@ import java.util.function.UnaryOperator;
  * </p>
  * 
  * @author Arindam Biswas
- * @since 1.0
+ * @since 0.1
  */
 @FunctionalInterface
 public interface CsvColumnDecorator extends UnaryOperator<String[]> {

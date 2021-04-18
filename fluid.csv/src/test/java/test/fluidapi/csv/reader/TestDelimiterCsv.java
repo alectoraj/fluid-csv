@@ -3,6 +3,7 @@ package test.fluidapi.csv.reader;
 import static com.fluidapi.csv.reader.CsvReader.auto;
 import static com.fluidapi.csv.reader.CsvReader.delimiter;
 import static com.fluidapi.csv.reader.CsvReader.string;
+import static com.fluidapi.csv.utility.CollectionUtils.asSet;
 import static org.apache.commons.lang3.StringUtils.isNoneEmpty;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,11 +11,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.annotation.Testable;
 
 import com.fluidapi.csv.annotations.CsvColumn;
+import com.fluidapi.csv.annotations.CsvFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,7 +37,6 @@ public class TestDelimiterCsv {
 	}
 	
 	@Test
-	@Disabled("Waiting for implementation")
 	public void testSomeNulls() {
 		List<String> nations = csv()
 				.map( delimiter(";") )
@@ -45,12 +45,11 @@ public class TestDelimiterCsv {
 		
 		assertThat(nations)
 			.hasSize(4)
-			.anySatisfy(nation -> assertThat(nation).isEmpty())
-			.containsOnly("Olympus", "Europe", "Japan", "", null);
+			.anySatisfy(nation -> assertThat(nation).isNullOrEmpty())
+			.allMatch(asSet("Olympus", "Europe", "Japan", "", null)::contains);
 	}
 	
 	@Test
-	@Disabled("Waiting for implementation")
 	public void testBean() {
 		List<Person> nations = csv()
 				.map( delimiter(";") )
@@ -59,10 +58,10 @@ public class TestDelimiterCsv {
 		
 		assertThat(nations)
 			.hasSize(4)
-			.noneMatch(person -> isNoneEmpty(person.firstName, person.lastName))
-			.noneSatisfy(person -> assertThat(person.age).isNotZero().isPositive())
+			.allMatch(person -> isNoneEmpty(person.firstName, person.lastName))
+			.allSatisfy(person -> assertThat(person.age).isNotZero().isPositive())
 			.anySatisfy(person -> assertThat(person.getJoining()).isNull())
-			.anySatisfy(person -> assertThat(person.getNation()).isEmpty());
+			.anySatisfy(person -> assertThat(person.getNation()).isNullOrEmpty());
 	}
 	
 	private Stream<String> csv() {
@@ -90,6 +89,7 @@ public class TestDelimiterCsv {
 		private int age;
 		
 		@CsvColumn(3)
+		@CsvFormat("uuuuMMMd")
 		private LocalDate joining;
 		
 		@CsvColumn(4)

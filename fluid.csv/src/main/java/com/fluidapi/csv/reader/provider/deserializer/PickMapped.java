@@ -44,7 +44,7 @@ public class PickMapped<T> implements CsvBeanDeserializer<T> {
 
 	private boolean isOutOfRange(String[] columns) {
 		return isEmpty(columns)
-			&& index >= columns.length;
+			|| index >= columns.length;
 	}
 
 }

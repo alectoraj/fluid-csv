@@ -2,7 +2,7 @@
 
 A Fluid CSV Library that works with the standard Java 8+ Streams.
 
-```
+```java
 God mostPowerfulGod = Files
              .lines(Path.of("/path/to/gods.csv"))
              .map( fixed(24, 18) )
@@ -54,7 +54,7 @@ Files.write( Path.of("/path/to/gods.csv"),
 Let's first have a look at the structure by data types
 
 ### READER
-```
+```java
 Stream<String> // e.g. Files.lines(Path)
 .map( CsvLineSplitter ) // returns Stream<String[]>
 .map( CsvColumnDecorator ) // returns Stream<String[]> | is a mutable operation, i.e. may mutate the input String[]
@@ -62,7 +62,7 @@ Stream<String> // e.g. Files.lines(Path)
 ... // continue your work with it
 ```
 or
-```
+```java
 YourPojo dataAsPojo = CsvLineSplitter.andThen(CsvColumnDecorator).andThen(CsvBeanDeserializer).apply(dataAsString);
 ```
 
@@ -82,7 +82,7 @@ Now let's have a look at some methods that provide the implementation
 Every method mentioned here are in `CsvReader` class
 
 **`CsvLineSplitter`**
-```
+```java
 - delimiter(regex)
 - fixed(24, 12, 10, 18, 50, 20, 1, 8, 8)
 - dequote(quoteMark)
@@ -92,14 +92,14 @@ Every method mentioned here are in `CsvReader` class
 ```
 
 **`CsvColumnDecorator`**
-```
+```java
 - strip()
 - trim() // fun fact, the names suggests the use of respective method from String class
 - unescape( backslashOrAlternate ) // in case your file has "Hormon D\'Souza" and you want it to be "Hormon D'Souza"
 ```
 
 **`CsvBeanDeserializer`**
-```
+```java
 - pick( thenMap ) // picks first column
 - pick( fromIndex, thenMap )
 - string()
@@ -112,13 +112,13 @@ Every method mentioned here are in `CsvReader` class
 Every method mentioned here are in `CsvWriter` class
 
 **`CsvBeanSerializer`**
-```
+```java
 - auto( YourPojo.class )
-- we only have one over here since converting to standard datatypes are fairly easy
+// we only have one over here since converting to standard datatypes are fairly easy
 ```
 
 **`CsvColumnDecorator`**
-```
+```java
 - enclose(quoteMark)
 - enclose(bracketStart, bracketEnd)
 - escape( backslashOrAlt, allCharactersThatNeedsEscaping )
@@ -126,7 +126,7 @@ Every method mentioned here are in `CsvWriter` class
 ```
 
 **`CsvColumnJoiner`**
-```
+```java
 - delimiter(";")
 - fixed(20, 12, 9, 10, 10, 8)
 - only( pickOnlyASingleColumn )

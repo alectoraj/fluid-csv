@@ -206,7 +206,8 @@ public class YourPojo {
 ### LIMITATIONS
 - Support for nested classes are not here yet
 - The pojo mapping is done strictly through index. Mapping through name over CSV files with first line or n-th line as header is out of our radar at the moment
-- This is not spring, so autowiring of dependencies in classes used with @CsvSerializer or @CsvDeserializer is beyond expectation
+- This is not spring, so autowiring of dependencies in classes used with `@CsvSerializer` or `@CsvDeserializer` is beyond expectation
+- Only triggers validation after a instance is populated or before it's about to be serialized, using validation annotations in dynamic places, like method won't be validated
 
 
 ## DEPENDENCY NOTE 

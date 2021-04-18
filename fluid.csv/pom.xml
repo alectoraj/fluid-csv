@@ -168,7 +168,7 @@
 	<repositories>
 		<repository>
 			<id>fluid-csv-mvn-repo</id>
-			<url>https://github.com/alectoraj/fluid-csv/blob/mvn-repo/</url>
+			<url>https://github.com/alectoraj/fluid-csv/raw/mvn-repo/</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>

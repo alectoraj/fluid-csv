@@ -139,9 +139,9 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.9.1</version>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.12</version>
 				<configuration>
 					<message>Maven artifacts for ${project.version}</message>
 					<noJekyll>true</noJekyll>
@@ -168,7 +168,7 @@
 	<repositories>
 		<repository>
 			<id>fluid-csv-mvn-repo</id>
-			<url>https://github.com/alectoraj/fluid-csv/raw/mvn-repo/</url>
+			<url>https://github.com/alectoraj/fluid-csv/blob/mvn-repo/</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>

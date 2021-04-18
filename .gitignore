@@ -1,5 +1,5 @@
 # Target folder
-/target/*
+/target/
 
 # Compiled class file
 *.class

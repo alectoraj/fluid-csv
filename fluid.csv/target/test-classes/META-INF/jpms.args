@@ -1,4 +1,0 @@
---patch-module
-com.fluiapi.csv=_
---add-reads
-com.fluiapi.csv=ALL-UNNAMED

@@ -12,7 +12,7 @@ public class MapCharacterPrimitive extends MapPrimitive<Character> {
 	}
 	
 	@Override
-	protected Character defaultIfEmpty() {
+	protected Character defaultIfEmpty(String column) {
 		return ' '; // black space
 	}
 	

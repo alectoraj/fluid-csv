@@ -8,7 +8,7 @@ public class MapFloatPrimitive extends MapPrimitive<Float> {
 	}
 	
 	@Override
-	protected Float defaultIfEmpty() {
+	protected Float defaultIfEmpty(String column) {
 		return 0f;
 	}
 	

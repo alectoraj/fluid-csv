@@ -17,5 +17,10 @@ public class SafeDecorateAs extends MapSafe<String> {
 	protected String mapSafe(String column) {
 		return column.transform(decorator);
 	}
+	
+	@Override
+	protected String defaultIfEmpty(String column) {
+		return column;
+	}
 
 }

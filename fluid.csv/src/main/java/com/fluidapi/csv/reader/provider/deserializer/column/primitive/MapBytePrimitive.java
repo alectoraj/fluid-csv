@@ -8,7 +8,7 @@ public class MapBytePrimitive extends MapPrimitive<Byte> {
 	}
 	
 	@Override
-	protected Byte defaultIfEmpty() {
+	protected Byte defaultIfEmpty(String column) {
 		return 0;
 	}
 	

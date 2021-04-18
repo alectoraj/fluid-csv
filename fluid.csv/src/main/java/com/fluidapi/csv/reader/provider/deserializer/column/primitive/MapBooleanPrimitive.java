@@ -8,7 +8,7 @@ public class MapBooleanPrimitive extends MapPrimitive<Boolean> {
 	}
 	
 	@Override
-	protected Boolean defaultIfEmpty() {
+	protected Boolean defaultIfEmpty(String column) {
 		return false;
 	}
 	

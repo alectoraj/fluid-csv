@@ -8,7 +8,7 @@ public class MapIntPrimitive extends MapPrimitive<Integer> {
 	}
 	
 	@Override
-	protected Integer defaultIfEmpty() {
+	protected Integer defaultIfEmpty(String column) {
 		return 0;
 	}
 	

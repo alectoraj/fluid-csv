@@ -12,6 +12,14 @@ import com.fluidapi.csv.provider.bean.TypeInfo;
 import com.fluidapi.csv.reader.deserializer.CsvColumnMapper;
 import com.fluidapi.csv.utility.FunctionUtils;
 
+/**
+ * decorates individual column before being parsed into respective data types, during reading.
+ * although name is preprocessor, it also acts as post-processor while writing to csv.
+ * there, after data types parsed into string, it decorates them before being written to csv.
+ * 
+ * @author Arindam Biswas
+ * @since 0.1
+ */
 public class MapPreprocessor {
 	
 	public static CsvColumnMapper<String> findSupported(TypeInfo<?> typeInfo, AnnotatedInfo<?> origin) {

@@ -8,7 +8,7 @@ public class MapShortPrimitive extends MapPrimitive<Short> {
 	}
 	
 	@Override
-	protected Short defaultIfEmpty() {
+	protected Short defaultIfEmpty(String column) {
 		return 0;
 	}
 	

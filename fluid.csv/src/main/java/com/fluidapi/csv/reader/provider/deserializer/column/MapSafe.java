@@ -13,10 +13,10 @@ public abstract class MapSafe<T> implements CsvColumnMapper<T> {
 		return ofNullable(column)
 				.filter(StringUtils::isNotEmpty)
 				.map(this::mapSafe)
-				.orElse(defaultIfEmpty());
+				.orElse(defaultIfEmpty(column));
 	}
 	
-	protected T defaultIfEmpty() {
+	protected T defaultIfEmpty(String column) {
 		return null;
 	}
 	

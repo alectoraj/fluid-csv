@@ -8,7 +8,7 @@ public class MapDoublePrimitive extends MapPrimitive<Double> {
 	}
 	
 	@Override
-	protected Double defaultIfEmpty() {
+	protected Double defaultIfEmpty(String column) {
 		return 0D;
 	}
 	

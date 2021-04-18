@@ -9,7 +9,7 @@ public class MapString implements CsvColumnMapper<String> {
 	public String map(String column) {
 		return column;
 	}
-
+	
 	public static final MapSupport<MapString> support = new MapSupport<>();
 	
 	static {

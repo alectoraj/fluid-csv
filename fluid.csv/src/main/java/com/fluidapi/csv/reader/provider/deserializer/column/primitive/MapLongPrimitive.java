@@ -8,7 +8,7 @@ public class MapLongPrimitive extends MapPrimitive<Long> {
 	}
 	
 	@Override
-	protected Long defaultIfEmpty() {
+	protected Long defaultIfEmpty(String column) {
 		return 0L;
 	}
 	

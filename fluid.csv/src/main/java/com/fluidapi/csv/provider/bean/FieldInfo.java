@@ -84,7 +84,7 @@ public class FieldInfo extends MemberInfo<Field> implements TypeInfo<Field> {
 				.map(getter -> new GetterInfo(this, getter));
 	}
 	private Optional<GetterInfo> findGetterWithGet() {
-		return findMethod("is" + capitalized())
+		return findMethod("get" + capitalized())
 				.filter(Objects::nonNull)
 				.map(getter -> new GetterInfo(this, getter));
 	}

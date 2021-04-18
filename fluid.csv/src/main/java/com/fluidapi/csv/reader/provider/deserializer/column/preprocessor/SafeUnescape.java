@@ -45,6 +45,11 @@ public class SafeUnescape extends MapSafe<String> {
 		return out.toString();
 	}
 	
+	@Override
+	protected String defaultIfEmpty(String column) {
+		return column;
+	}
+	
 	public static boolean supports(AnnotatedInfo<?> origin) {
 		return origin.hasAnnotation(CsvUnescape.class);
 	}

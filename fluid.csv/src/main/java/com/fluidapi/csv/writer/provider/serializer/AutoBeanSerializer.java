@@ -1,12 +1,16 @@
 package com.fluidapi.csv.writer.provider.serializer;
 
+import static com.fluidapi.csv.bean.ValidateDuring.ALWAYS;
+import static com.fluidapi.csv.bean.ValidateDuring.SERIALIZATION;
 import static java.util.stream.Collectors.toMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.fluidapi.csv.annotations.CsvValidate;
 import com.fluidapi.csv.exception.CsvFormatException;
 import com.fluidapi.csv.provider.bean.AnnotatedInfo;
 import com.fluidapi.csv.provider.bean.AutoGetter;
@@ -14,26 +18,50 @@ import com.fluidapi.csv.provider.bean.CsvClassInfo;
 import com.fluidapi.csv.provider.bean.FieldInfo;
 import com.fluidapi.csv.provider.bean.GetterInfo;
 import com.fluidapi.csv.provider.bean.MethodInfo;
+import com.fluidapi.csv.validaton.BeanValidation;
 import com.fluidapi.csv.writer.CsvBeanSerializer;
 import com.fluidapi.csv.writer.provider.serializer.column.BlankGetter;
+
+import jakarta.validation.Valid;
 
 public class AutoBeanSerializer<T> implements CsvBeanSerializer<T> {
 	
 	final List<AutoGetter> extractors;
+	final Consumer<T> validator;
 
 	public AutoBeanSerializer(Class<T> type) {
-		this.extractors = listExtractors(type);
+		CsvClassInfo<T> classInfo = new CsvClassInfo<>(type);
+		this.extractors = listExtractors(classInfo);
+		this.validator = toValidator(classInfo);
 	}
 
 	@Override
 	public String[] convert(T t) {
+		
+		// validate
+		validator.accept(t);
+		
+		// validated, convert to string array
 		return extractors.stream()
 				.map(mapper -> mapper.apply(t))
 				.toArray(String[]::new);
 	}
+
+	private Consumer<T> toValidator(CsvClassInfo<T> classInfo) {
+		
+		// if @Valid is added
+		return classInfo.hasAnnotation(Valid.class)
+		
+		// or @CsvValidate with SERIALIZATION or ALWAYS
+			|| (classInfo.hasAnnotation(CsvValidate.class)
+				&& classInfo.findAnnotation(CsvValidate.class).value()
+					.isOneOf(ALWAYS, SERIALIZATION))
+			
+		// then result a validator, or keep it no-op
+			? BeanValidation::validate : t -> {};
+	}
 	
-	private List<AutoGetter> listExtractors(Class<T> type) {
-		CsvClassInfo<T> classInfo = new CsvClassInfo<>(type);
+	private List<AutoGetter> listExtractors(CsvClassInfo<T> classInfo) {
 
 		// get both get operations
 		// by field (respective getter is used if present)

@@ -132,9 +132,82 @@ Every method mentioned here are in `CsvWriter` class
 - only( pickOnlyASingleColumn )
 ```
 
+## Configuring YourPojo
+
+```java
+@Valid // takes precedence, and acts as @CsvValidate(ALWAYS)
+@CsvValidate(DESERIALIZATION)
+@Data // lombok
+@NoArgConstructor // must to construct class object automatically
+public class YourPojo {
+    
+    @CsvColumn(0)
+    @CsvLetterCase(LetterCase.TITLE)
+    private String name;
+    
+    // api doesn't automatically strip spaces,
+    // since it maybe a part of your data validation
+    // you'll have to specify it yourself
+    @CsvStrip
+    @CsvColumn(1)
+    private int age;
+    
+    @CsvColumn(2)
+    @CsvLetterCase(LetterCase.UPPER)
+    private String activeStatus;
+    
+    @CsvColumn(3)
+    @CsvFormat("MMM d, uuuu")
+    private LocalDate weddingDate;
+    
+    @CsvColumn(4)
+    @CsvFormat("yyyy-MM-dd")
+    private Calendar lastUpdate;
+    
+    @CsvColumn(5)
+    @CsvFormat("uuuu-MM-dd'T'HH:mm:ss.SSS")
+    private LocalDateTime lastLogin;
+    
+    @ReadOnly // say we're not writing the joining date for target csv file
+    @CsvColumn(6)
+    @CsvTemporal(TemporalType.DATE)
+    private Date joined;
+    
+    private int withUsForYears;
+    
+    @CsvColumn(6) // notice we're reusing index 6
+    @CsvTemporal(TemporalType.DATE)
+    public void calcWithUsForYears(Date joinDate) {
+        withUsForYears = DateUtil.getYearsFrom(joinDate);
+    }
+    
+    @CsvColumn(6)
+    public int isMarriedSince() {
+        return DateUtil.getYearsSince(weddingDate);
+    }
+    
+    // say, we have an address list mapped by address code coming from input csv file
+    // it can be done in 2 ways
+    @CsvColumn(7)
+    @CsvDeserializer(AddressFinder.class)
+    private Address address;
+    
+    // alternatively, you can take the column in a method and map
+    // not suggested if the mapping logic is complex to write here
+    @CsvColumn(7)
+    public void findAddressByCode(String addressCode) {
+        address = AddressService.findAddress(addressCode);
+    }
+    
+}
+```
+*Explore `com.fluidapi.csv.annotations` for more*
+
 ### LIMITATIONS
 - Support for nested classes are not here yet
 - The pojo mapping is done strictly through index. Mapping through name over CSV files with first line or n-th line as header is out of our radar at the moment
+- This is not spring, so autowiring of dependencies in classes used with `@CsvSerializer` or `@CsvDeserializer` is beyond expectation
+- Only triggers validation after a instance is populated or before it's about to be serialized, using validation annotations in dynamic places, like method won't be validated
 
 
 ## DEPENDENCY NOTE 
